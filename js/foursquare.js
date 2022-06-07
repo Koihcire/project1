@@ -15,6 +15,6 @@ async function search(query) {
             "Authorization": FOURSQUARE_API_KEY
         }
     })
-    console.log(response.data);
+    // console.log(response.data);
     return response.data;
 }

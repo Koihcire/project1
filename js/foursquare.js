@@ -8,8 +8,8 @@ async function searchActivity(query) {
         "params": {
             "query": query,
             "near": "singapore",
-            "limit" : 10,
-            "categories" : "17114,17115" //19009 hotel, 16003,16005,16015,16028,16032 national park,
+            "limit" : 20,
+            "categories" : "17114" //19009 hotel, 16003,16005,16015,16028,16032 national park,
         },
         "headers": {
             "Accept": "application/json",

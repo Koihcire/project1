@@ -7,13 +7,27 @@ async function navigate(origin,destination) {
     let response = await axios.get(url, {
         'params': {
             "apikey": STB_API_KEY,
-            "origin": origin, //bukit timah
-            "destination": destination //np
+            "origin": origin, 
+            "destination": destination,
+            "maxpoi" : 1
         },
         "headers": {
             "Accept": "application/json"
         }
     })
-    console.log(response.data);
+    // console.log(response.data);
     return response.data;
 }
+
+function setStart(a,b){
+    let start = document.querySelector("#startPoint");
+    start.value = a + "," + b;
+    // return c;
+}
+
+function setEnd(a,b){
+    let end = document.querySelector("#endPoint");
+    end.value = a + "," + b;
+    // return c;
+}
+

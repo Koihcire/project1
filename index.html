@@ -16,6 +16,9 @@
 </head>
 <body>
     <button id="geolocate" class="btn btn-primary">Locate Me</button>
+
+    <div id="geolocatePopup" style="display: none;"></div>
+
     <div id="map" class=""></div>
 
     <div id="search">
@@ -28,16 +31,18 @@
 
     <div id="navigate">
         <div>
-            <input type="text" id="startPoint" placeholder="start point"/>
+            <input type="text" id="startPoint" placeholder="start point" disabled/>
         </div>
         <div>
-            <input type="text" id="endPoint" placeholder="end point"/>
+            <input type="text" id="endPoint" placeholder="end point" disabled/>
         </div>
         <button id="btnNavigate" class="btn btn-primary">Navigate</button>
-
+        <div id="navContent"></div>
     </div>
+
     <!-- link leaflet js -->
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="crossorigin=""></script>
+    <script src="js/Polyline.encoded.js"></script>
     <!-- link markerscluster js -->
     <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster-src.js"></script>
     <!-- axios js -->

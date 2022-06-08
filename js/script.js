@@ -25,18 +25,77 @@ window.addEventListener("DOMContentLoaded", async function () {
         navigator.geolocation.getCurrentPosition(successCallback, errorCallback, geoOps);
     })
 
-    //SEARCH FUNCTION
+    //SEARCH ACTIVITY FUNCTION
+    let searchActivityLayer = L.layerGroup();
+    let searchContent = document.querySelector("#searchContent");
     document.querySelector("#btnSearch").addEventListener("click", async function () {
+        searchActivityLayer.clearLayers();
+        searchContent.innerHTML = "";
         let query = document.querySelector("#txtSearch").value;
         if (query) {
-            let locations = await search(query);
-            console.log(locations);
-            for (let l of locations.results) {
-                let lat = l.geocodes.main.latitude;
-                let lng = l.geocodes.main.longitude;
-                let marker = L.marker([lat, lng]).addTo(map)
-                    .bindPopup(`${l.name}`);
+            //add location details
+            let locations = await searchActivity(query);
+            // console.log(locations);
+            for (let loc of locations.results) {
+                let lat = loc.geocodes.main.latitude;
+                let lng = loc.geocodes.main.longitude;
+        
+                //extract place details
+                let marker = L.marker([lat, lng]);
+                marker.addTo(searchActivityLayer)
+                    .bindPopup(`${loc.name}`);
+
+                // //extract location details
+                let fsq_id = loc.fsq_id;
+                console.log (fsq_id);
+                let detail = await activityDetails(fsq_id);
+                console.log (detail);
+                //grab description
+                let description = "";
+                try {
+                    description = detail.description;
+                } catch (e) {
+                    console.log (e);
+                }
+                //grab photo
+                let photoUrl = "";
+                try {
+                    photoUrl = `${detail.photos[0].prefix}400x400${detail.photos[0].suffix}`;
+                } catch (e) {
+                    console.log (e);
+                }
+                //grab website
+                let websiteUrl = "";
+                try {
+                    websiteUrl = detail.website;
+                } catch(e) {
+                    console.log (e);
+                }
+                //grab hours
+                let openingHours = "";
+                try {
+                    openingHours = detail.hours.display;
+                } catch (e) {
+                    console.log(e);
+                }
+                
+                //add element to search content
+                let divElement = document.createElement("div");
+                divElement.innerHTML = `
+                <div class="card mt-3" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">${loc.name}</h5>
+                        <img src="${photoUrl}" style="width: 100%;">
+                        <p class="card-text">${description}</p>
+                        <p class="card-text">${openingHours}</p>
+                        <p class="card-text">${loc.location.formatted_address}</p>
+                        <a href="${websiteUrl}" class="btn btn-primary">More Info</a>
+                    </div>
+                </div>
+                `;
+                searchContent.appendChild(divElement);
             }
+            searchActivityLayer.addTo(map);
         } 
     })
 

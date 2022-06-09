@@ -9,7 +9,7 @@ async function searchActivity(query) {
             "query": query,
             "near": "singapore",
             "limit" : 20,
-            "categories" : "17114" //19009 hotel, 16003,16005,16015,16028,16032 national park,
+            "categories" : "19014,17114" //19014 hotel, 17114 shopping mall
         },
         "headers": {
             "Accept": "application/json",
@@ -30,7 +30,7 @@ async function activityDetails(fsq_id) {
             "Accept": "application/json",
             "Authorization": FOURSQUARE_API_KEY
         }
-    })
+    })   
     // console.log(response.data)
     return response.data;
 }

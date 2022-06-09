@@ -17,13 +17,16 @@ window.addEventListener("DOMContentLoaded", async function () {
             myLat = pos.coords.latitude;
             myLng = pos.coords.longitude;
             // console.log(myLat, myLng);
-            let me = L.marker([myLat, myLng]);
-            me.addTo(map)
+            let marker = L.marker([myLat, myLng],{icon:userIcon});
+            marker.addTo(map)
                 .bindPopup(`
             This is my location</br>
             <button class="btn btn-success" onclick="setStart(${myLat},${myLng})">Set as Start</button>
             <button class="btn btn-danger" onclick="setEnd(${myLat},${myLng})">Set as End</button>
             `);
+            marker.on('mouseover', function(e){
+                marker.openPopup();
+            });
         }
         function errorCallback() {
             alert("wrong");
@@ -35,26 +38,18 @@ window.addEventListener("DOMContentLoaded", async function () {
     let searchActivityLayer = L.layerGroup();
     let searchContent = document.querySelector("#searchContent");
     document.querySelector("#btnSearch").addEventListener("click", async function () {
-        searchActivityLayer.clearLayers();
         searchContent.innerHTML = "";
         let query = document.querySelector("#txtSearch").value;
         if (query) {
             //add location details
             let locations = await searchActivity(query);
-            // console.log(locations);
+            console.log(locations);
             for (let loc of locations.results) {
                 let lat = loc.geocodes.main.latitude;
                 let lng = loc.geocodes.main.longitude;
                 let locName = loc.name;
 
-                //extract place details
-                let marker = L.marker([lat, lng]);
-                marker.addTo(searchActivityLayer)
-                    .bindPopup(`
-                    ${locName}</br>
-                    <button class="btn btn-success" onclick="setStart(${lat}, ${lng})">Set as Start</button>
-                    <button class="btn btn-danger" onclick="setEnd(${lat}, ${lng})">Set as End</button>
-                    `);
+                
 
                 // //extract location details
                 let fsq_id = loc.fsq_id;
@@ -106,9 +101,37 @@ window.addEventListener("DOMContentLoaded", async function () {
                 </div>
                 `;
                 searchContent.appendChild(divElement);
+
+                //create markers
+                //set marker type according to category
+                let markerIcon = "";
+                if (loc.categories[0].id == "17114"){
+                    markerIcon = mallIcon;
+                } else if (loc.categories[0].id == "19014"){
+                    markerIcon = hotelIcon;
+                }
+                //add markers to map
+                let marker = L.marker([lat, lng], {icon: markerIcon});
+                marker.addTo(searchActivityLayer)
+                    .bindPopup(`
+                    ${locName}</br>
+                    <button class="btn btn-success" onclick="setStart(${lat}, ${lng})">Set as Start</button>
+                    <button class="btn btn-danger" onclick="setEnd(${lat}, ${lng})">Set as End</button>
+                    `);
+                //add marker functions
+                marker.on('mouseover', function(e){
+                    marker.openPopup();
+                })
             }
             searchActivityLayer.addTo(map);
         }
+    })
+    
+    //clear search
+    document.querySelector("#btnClearSearch").addEventListener("click", function(){
+        searchActivityLayer.clearLayers();
+        searchContent.innerHTML = "";
+        document.querySelector("#txtSearch").value = "";
     })
 
     //NAVIGATION FUNCTION
@@ -119,11 +142,14 @@ window.addEventListener("DOMContentLoaded", async function () {
         navigationLayer.clearLayers();
         // console.log("origin :" + origin + "destination : " + destination);
         let navigateRoute = await navigate(origin, destination);
-        // console.log(navigateRoute);
+        console.log(navigateRoute);
 
         let encoded = navigateRoute.data.routes[0].overview_polyline.points;
         let polyline = L.Polyline.fromEncoded(encoded).addTo(navigationLayer);
         navigationLayer.addTo(map);
+    })
+    document.querySelector("#btnClearNavigate").addEventListener("click", function(){
+        navigationLayer.clearLayers();
     })
 
 })

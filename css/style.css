@@ -1,9 +1,13 @@
-/* .test {
-    height: 200px;
-    width: 200px;
-    background-color: red;
-} */
+
 
 #map {
-    height: 80vh;
+    height: 100vh;
+}
+
+#map-container {
+    height: 100vh;
+}
+
+#search-container {
+    max-height: 100vh;
 }

@@ -1,33 +1,34 @@
+//CREATE MAP
+let map = createMap(1.3521, 103.8198);
+
+//LOAD EVENT LISTENERS
 window.addEventListener("DOMContentLoaded", async function () {
-
-    //CREATE MAP
-    let map = createMap(1.3521, 103.8198);
-
     //GEOLOCATE
-    let myLat = ""
-    let myLng = ""
-    //function to set start
-
+    //add event listener for geolocate button
     document.querySelector("#geolocate").addEventListener("click", function () {
+        //function for geoops argument
         var geoOps = {
             enableHighAccuracy: true,
             timeout: 10000
         }
+        //function for success call back argument
         function successCallback(pos) {
-            myLat = pos.coords.latitude;
-            myLng = pos.coords.longitude;
-            // console.log(myLat, myLng);
-            let marker = L.marker([myLat, myLng],{icon:userIcon});
+            let lat = pos.coords.latitude;
+            let lng = pos.coords.longitude;
+            // console.log(lat, lng);
+            //create maker of geolocation
+            let marker = L.marker([lat, lng], { icon: userIcon });
             marker.addTo(map)
                 .bindPopup(`
-            This is my location</br>
-            <button class="btn btn-success" onclick="setStart(${myLat},${myLng})">Set as Start</button>
-            <button class="btn btn-danger" onclick="setEnd(${myLat},${myLng})">Set as End</button>
-            `);
-            marker.on('mouseover', function(e){
+                    This is my location</br>
+                    <button class="btn btn-success" onclick="setStart(${lat},${lng})">Set as Start</button>
+                    <button class="btn btn-danger" onclick="setEnd(${lat},${lng})">Set as End</button>
+                    `);
+            marker.on('mouseover', function (e) {
                 marker.openPopup();
             });
         }
+        //function for errorcall back argument
         function errorCallback() {
             alert("wrong");
         }
@@ -37,19 +38,20 @@ window.addEventListener("DOMContentLoaded", async function () {
     //SEARCH ACTIVITY FUNCTION
     let searchActivityLayer = L.layerGroup();
     let searchContent = document.querySelector("#searchContent");
+
     document.querySelector("#btnSearch").addEventListener("click", async function () {
         searchContent.innerHTML = "";
         let query = document.querySelector("#txtSearch").value;
         if (query) {
             //add location details
             let locations = await searchActivity(query);
-            console.log(locations);
+            // console.log(locations);
             for (let loc of locations.results) {
                 let lat = loc.geocodes.main.latitude;
                 let lng = loc.geocodes.main.longitude;
                 let locName = loc.name;
 
-                
+
 
                 // //extract location details
                 let fsq_id = loc.fsq_id;
@@ -105,13 +107,13 @@ window.addEventListener("DOMContentLoaded", async function () {
                 //create markers
                 //set marker type according to category
                 let markerIcon = "";
-                if (loc.categories[0].id == "17114"){
+                if (loc.categories[0].id == "17114") {
                     markerIcon = mallIcon;
-                } else if (loc.categories[0].id == "19014"){
+                } else if (loc.categories[0].id == "19014") {
                     markerIcon = hotelIcon;
                 }
                 //add markers to map
-                let marker = L.marker([lat, lng], {icon: markerIcon});
+                let marker = L.marker([lat, lng], { icon: markerIcon });
                 marker.addTo(searchActivityLayer)
                     .bindPopup(`
                     ${locName}</br>
@@ -119,16 +121,16 @@ window.addEventListener("DOMContentLoaded", async function () {
                     <button class="btn btn-danger" onclick="setEnd(${lat}, ${lng})">Set as End</button>
                     `);
                 //add marker functions
-                marker.on('mouseover', function(e){
+                marker.on('mouseover', function (e) {
                     marker.openPopup();
                 })
             }
             searchActivityLayer.addTo(map);
         }
     })
-    
-    //clear search
-    document.querySelector("#btnClearSearch").addEventListener("click", function(){
+
+    //CLEAR SEARCH
+    document.querySelector("#btnClearSearch").addEventListener("click", function () {
         searchActivityLayer.clearLayers();
         searchContent.innerHTML = "";
         document.querySelector("#txtSearch").value = "";
@@ -148,7 +150,7 @@ window.addEventListener("DOMContentLoaded", async function () {
         let polyline = L.Polyline.fromEncoded(encoded).addTo(navigationLayer);
         navigationLayer.addTo(map);
     })
-    document.querySelector("#btnClearNavigate").addEventListener("click", function(){
+    document.querySelector("#btnClearNavigate").addEventListener("click", function () {
         navigationLayer.clearLayers();
     })
 

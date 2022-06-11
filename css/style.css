@@ -11,3 +11,11 @@
 #search-container {
     max-height: 100vh;
 }
+
+.descriptionFontSize {
+    font-size: small;
+}
+
+.descriptionAddress {
+    font-size: medium;
+}

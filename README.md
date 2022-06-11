@@ -8,3 +8,10 @@ User should be able to search for specific locations of national parks and natur
 User should be able to toggle different layers to display either national parks, nature trails, or hotels
 User should be able to determine start point and end point, and navigate between them
 User should be able to select current location as start point
+
+
+this is the icon pack for the description cards
+https://www.flaticon.com/packs/font-awesome/5
+
+this is the icon park for the logos links
+https://www.flaticon.com/packs/social-16

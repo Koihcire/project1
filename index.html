@@ -21,46 +21,82 @@
 
 <body>
     <div id="map-container">
-        <div id="search-container" class="container" style="position: absolute; z-index: 314159; width: fit-content; background-color: whitesmoke;">
-            <div id="searchBar-container" class="container">
-                <input type="text" id="txtSearch" placeholder="search for locations" />
-                <button id="btnSearch" class="btn btn-primary">Search</button>
-                <button id="btnClearSearch" class="btn btn-danger">Clear</button>
-            </div>
+        <div id="search-container" class="container rounded-3"
+            style="position: absolute; z-index: 314159; width:33%; background-color: rgba(255,255,255,0.8); margin:5px;">
             
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <li class="nav-item" role="presentation">
-                  <button class="nav-link active" id="searchContent-tab" data-bs-toggle="tab" data-bs-target="#searchContent" type="button" role="tab" aria-controls="searchContent" aria-selected="true">Search</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                  <button class="nav-link" id="navigate-tab" data-bs-toggle="tab" data-bs-target="#navigate" type="button" role="tab" aria-controls="navigate" aria-selected="false">Navigate</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                  <button class="nav-link" id="feedback-tab" data-bs-toggle="tab" data-bs-target="#feedback" type="button" role="tab" aria-controls="feedback" aria-selected="false">Feedback</button>
-                </li>
-              </ul>
-              <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="searchContent" role="tabpanel" aria-labelledby="searchContent-tab" style="background-color: white; max-height: 80vh; overflow: scroll;"></div>
-                <div class="tab-pane fade" id="navigate" role="tabpanel" aria-labelledby="navigate-tab">
-                    <div>
-                        <input type="text" id="startPoint" placeholder="start point" disabled />
+            <!-- SEARCH BAR -->
+            <div id="searchBar-container" class="container row g-1">
+                <input type="text" id="txtSearch" placeholder="search for shopping malls"
+                    class="form-control form-control-sm mt-3 col-auto" style="width:57%" />
+                <button id="btnSearch" class="btn btn-primary btn-sm col-auto mt-3 ms-1"
+                    style="width:20%;">Search</button>
+                <button id="btnClearSearch" class="btn btn-danger btn-sm col-auto mt-3 ms-1"
+                    style="width:20%">Clear</button>
+            </div>
+
+            <!-- SEARCH OPTIONS -->
+            <div id="searchOptions" class="container collapse mt-2">
+                <!-- TABS -->
+                <ul class="nav nav-tabs mb-2 justify-content-evenly" id="myTab" role="tablist">
+                    <!-- Search tab -->
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="searchContent-tab" data-bs-toggle="tab"
+                            data-bs-target="#searchContent" type="button" role="tab " aria-controls="searchContent"
+                            aria-selected="true">Search</button>
+                    </li>
+                    <!-- Navigate Tab -->
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="navigate-tab" data-bs-toggle="tab" data-bs-target="#navigate"
+                            type="button" role="tab" aria-controls="navigate" aria-selected="false">Navigate</button>
+                    </li>
+                    <!-- Feedback tab -->
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="feedback-tab" data-bs-toggle="tab" data-bs-target="#feedback"
+                            type="button" role="tab" aria-controls="feedback" aria-selected="false">Feedback</button>
+                    </li>
+                </ul>
+
+                <!-- CONTENT -->
+                <div class="tab-content" id="myTabContent">
+                    <!-- search content -->
+                    <div class="tab-pane fade show active" id="searchContent" role="tabpanel"
+                        aria-labelledby="searchContent-tab" style="max-height: 80vh; overflow: scroll; width: 100%;">
+                        <p>no search results</p>
                     </div>
-                    <div>
-                        <input type="text" id="endPoint" placeholder="end point" disabled />
+                    <!-- navigation content -->
+                    <div class="tab-pane fade" id="navigate" role="tabpanel" aria-labelledby="navigate-tab">
+                        <div class="container">
+                            <img src="images/circle.png" alt="">
+                            <input type="text" id="startPoint" class="form-control form-control-sm mt-3 d-inline ms-3"
+                                style="width: 85%;" placeholder="Set Start Point" disabled />
+                        </div>
+                        <div class="container">
+                            <img src="images/end.png" alt="">
+                            <input type="text" id="endPoint" class="form-control form-control-sm mt-1 d-inline ms-3"
+                                style="width: 85%;" placeholder="Set End Point" disabled />
+                        </div>
+                        <div class="container mt-3">
+                            <button id="btnNavigate" class="btn btn-primary btn-sm">Navigate</button>
+                            <button id="btnClearNavigate" class="btn btn-danger btn-sm">Clear Route</button>
+                            <button id="geolocate" class="btn btn-primary btn-sm">Locate</button>
+                            <div id="navContent"></div>
+                        </div>
                     </div>
-                    <button id="btnNavigate" class="btn btn-primary">Navigate</button>
-                    <button id="btnClearNavigate" class="btn btn-danger">Clear Route</button>
-                    <div id="navContent"></div>
+                    <!-- feedback content -->
+                    <div class="tab-pane fade" id="feedback" role="tabpanel" aria-labelledby="feedback-tab">
+                        <h1>THIS IS A FORM</h1>
+                    </div>
                 </div>
-                <div class="tab-pane fade" id="feedback" role="tabpanel" aria-labelledby="feedback-tab">
-                    <h1>THIS IS A FORM</h1>
-                </div>
-              </div>
+            </div>
+            <!-- MORE TOGGLE -->
+            <div id="moreToggle" class="container d-flex justify-content-center">
+                <a href="#searchOptions" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="searchOptions"><img src="images/more.png" style="height:20px;"></a>
+            </div>
 
         </div>
 
-        <button id="geolocate" class="btn btn-primary" style="position:absolute; z-index: 314159; margin-left:88%;">Locate</button>
         
+
         <div id="map"></div>
     </div>
 
@@ -93,3 +129,5 @@
 </body>
 
 </html>
+
+<img src="images/" alt="">

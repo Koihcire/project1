@@ -40,24 +40,28 @@ window.addEventListener("DOMContentLoaded", async function () {
     let searchContent = document.querySelector("#searchContent");
 
     document.querySelector("#btnSearch").addEventListener("click", async function () {
+        // clear and show search options content
+        let target = document.querySelector("#searchOptions").classList;
+        if (!target.contains("show")){
+            target.add("show");
+        }
+
         searchContent.innerHTML = "";
         let query = document.querySelector("#txtSearch").value;
         if (query) {
             //add location details
             let locations = await searchActivity(query);
-            // console.log(locations);
+            console.log(locations);
             for (let loc of locations.results) {
                 let lat = loc.geocodes.main.latitude;
                 let lng = loc.geocodes.main.longitude;
                 let locName = loc.name;
 
-
-
                 // //extract location details
                 let fsq_id = loc.fsq_id;
-                console.log(fsq_id);
+                // console.log(fsq_id);
                 let detail = await activityDetails(fsq_id);
-                console.log(detail);
+                // console.log(detail);
                 //grab description
                 let description = "";
                 try {
@@ -87,18 +91,27 @@ window.addEventListener("DOMContentLoaded", async function () {
                     console.log(e);
                 }
 
+                let locationId = "a" + fsq_id;
                 //add element to search content
                 let divElement = document.createElement("div");
                 divElement.innerHTML = `
-                <div class="card mt-3" style="width: 18rem;">
+                <div class="card mt-3" style="width: 100%;">
                     <div class="card-body">
-                        <h5 class="card-title">${loc.name}</h5>
-                        <img src="${photoUrl}" style="width: 100%;">
-                        <p class="card-text">${description}</p>
-                        <p class="card-text">${openingHours}</p>
-                        <p class="card-text">${loc.location.formatted_address}</p>
-                        <a href="${websiteUrl}" class="btn btn-primary">More Info</a>
-                        
+                        <a data-bs-toggle="collapse" href="#${locationId}" role="button" aria-expanded="false" aria-controls="${locationId}">
+                        <h6 class="card-title">${loc.name}</h6>
+                        </a>
+                        <div id="${locationId}" class="collapse">
+                            <img src="${photoUrl}" style="width: 100%;">
+                            <p class="card-text descriptionFontSize">${description}</p></br>
+                        </div> 
+                        <img src="images/time.png" style="height:20px;">
+                        <p class="card-text descriptionFontSize" style="display:inline; margin-left:10px;">${openingHours}</p> </br>
+                        <img src="images/home.png" style="height:20px;">
+                        <p class="card-text descriptionFontSize" style="display:inline; margin-left:10px;">${loc.location.formatted_address}</p> <hr>
+                        <div id="logoLinks">
+                            <a href="${websiteUrl}"><img src="images/world.png" style="height:20px;"></a>
+                            <a href="#"><img src="images/phone.png" style="height:20px; margin-left: 10px;"></a>
+                        </div>
                     </div>
                 </div>
                 `;
@@ -132,7 +145,7 @@ window.addEventListener("DOMContentLoaded", async function () {
     //CLEAR SEARCH
     document.querySelector("#btnClearSearch").addEventListener("click", function () {
         searchActivityLayer.clearLayers();
-        searchContent.innerHTML = "";
+        searchContent.innerHTML = `<p>no search results</p>`;
         document.querySelector("#txtSearch").value = "";
     })
 
@@ -155,3 +168,14 @@ window.addEventListener("DOMContentLoaded", async function () {
     })
 
 })
+
+
+
+
+
+
+
+
+
+
+

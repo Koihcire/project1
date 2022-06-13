@@ -1,6 +1,6 @@
 // MAP API
 function createMap(lat, lng) {
-    let map = L.map("map",{
+    let map = L.map("map", {
         zoomControl: true
     });
     //set the center point of the map
@@ -19,22 +19,23 @@ function createMap(lat, lng) {
     return map;
 }
 
-
 //set up icon
 var mallIcon = L.icon({
     iconUrl: "images/mall.png",
-    iconSize: [40,40],
+    iconSize: [40, 40],
 });
 
 var hotelIcon = L.icon({
     iconUrl: "images/hotel.png",
-    iconSize: [40,40],
+    iconSize: [40, 40],
 });
 
 var userIcon = L.icon({
     iconUrl: "images/user.png",
-    iconSize: [40,40],
+    iconSize: [40, 40],
 });
+
+
 
 
 // <a href="https://www.flaticon.com/free-icons/maps-and-location" title="maps-and-location icons">Maps-and-location icons created by adrianadam - Flaticon</a>

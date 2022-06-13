@@ -1,5 +1,7 @@
 //CREATE MAP
 let map = createMap(1.3521, 103.8198);
+let myLat = "";
+let myLng = "";
 
 //LOAD EVENT LISTENERS
 window.addEventListener("DOMContentLoaded", async function () {
@@ -13,16 +15,17 @@ window.addEventListener("DOMContentLoaded", async function () {
         }
         //function for success call back argument
         function successCallback(pos) {
-            let lat = pos.coords.latitude;
-            let lng = pos.coords.longitude;
+            myLat = pos.coords.latitude;
+            myLng = pos.coords.longitude;
             // console.log(lat, lng);
+            map.setView([myLat, myLng],12);
             //create maker of geolocation
-            let marker = L.marker([lat, lng], { icon: userIcon });
+            let marker = L.marker([myLat, myLng], { icon: userIcon });
             marker.addTo(map)
                 .bindPopup(`
                     This is my location</br>
-                    <button class="btn btn-success" onclick="setStart(${lat},${lng})">Set as Start</button>
-                    <button class="btn btn-danger" onclick="setEnd(${lat},${lng})">Set as End</button>
+                    <button class="btn btn-success" onclick="setStart(${myLat},${myLng})">Set as Start</button>
+                    <button class="btn btn-danger" onclick="setEnd(${myLat},${myLng})">Set as End</button>
                     `);
             marker.on('mouseover', function (e) {
                 marker.openPopup();
@@ -40,7 +43,7 @@ window.addEventListener("DOMContentLoaded", async function () {
     let searchContent = document.querySelector("#searchContent");
 
     document.querySelector("#btnSearch").addEventListener("click", async function () {
-        // clear and show search options content
+        //show search options content
         let target = document.querySelector("#searchOptions").classList;
         if (!target.contains("show")){
             target.add("show");
@@ -48,9 +51,17 @@ window.addEventListener("DOMContentLoaded", async function () {
 
         searchContent.innerHTML = "";
         let query = document.querySelector("#txtSearch").value;
+        let locations = "";
         if (query) {
-            //add location details
-            let locations = await searchActivity(query);
+            //see if near me check box is checked
+            let nearMe = document.querySelector("#checkNearMe");
+
+            if (nearMe.checked){
+                locations = await geoLocateSearch(query,myLat,myLng);
+
+            } else {
+                locations = await searchActivity(query);
+            }
             console.log(locations);
             for (let loc of locations.results) {
                 let lat = loc.geocodes.main.latitude;

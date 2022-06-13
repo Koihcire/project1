@@ -36,6 +36,4 @@ var userIcon = L.icon({
 });
 
 
-
-
 // <a href="https://www.flaticon.com/free-icons/maps-and-location" title="maps-and-location icons">Maps-and-location icons created by adrianadam - Flaticon</a>

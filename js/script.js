@@ -3,40 +3,60 @@ let map = createMap(1.3521, 103.8198);
 let myLat = "";
 let myLng = "";
 
+//GEOLOCATE
+//function for geoops argument
+var geoOps = {
+    enableHighAccuracy: true,
+    timeout: 10000
+}
+//function for success call back argument
+function successCallback(pos) {
+    myLat = pos.coords.latitude;
+    myLng = pos.coords.longitude;
+    // // console.log(lat, lng);
+}
+//function for errorcall back argument
+function errorCallback() {
+    alert("wrong");
+}
+navigator.geolocation.getCurrentPosition(successCallback, errorCallback, geoOps);
+
+
 //LOAD EVENT LISTENERS
 window.addEventListener("DOMContentLoaded", async function () {
     //GEOLOCATE
     //add event listener for geolocate button
-    document.querySelector("#geolocate").addEventListener("click", function () {
-        //function for geoops argument
-        var geoOps = {
-            enableHighAccuracy: true,
-            timeout: 10000
-        }
-        //function for success call back argument
-        function successCallback(pos) {
-            myLat = pos.coords.latitude;
-            myLng = pos.coords.longitude;
-            // console.log(lat, lng);
-            map.setView([myLat, myLng],12);
-            //create maker of geolocation
-            let marker = L.marker([myLat, myLng], { icon: userIcon });
-            marker.addTo(map)
-                .bindPopup(`
-                    This is my location</br>
-                    <button class="btn btn-success" onclick="setStart(${myLat},${myLng})">Set as Start</button>
-                    <button class="btn btn-danger" onclick="setEnd(${myLat},${myLng})">Set as End</button>
-                    `);
-            marker.on('mouseover', function (e) {
-                marker.openPopup();
-            });
-        }
-        //function for errorcall back argument
-        function errorCallback() {
-            alert("wrong");
-        }
-        navigator.geolocation.getCurrentPosition(successCallback, errorCallback, geoOps);
-    })
+    // document.querySelector("#geolocate").addEventListener("click", async function () {
+    //     //function for geoops argument
+    //     var geoOps = {
+    //         enableHighAccuracy: true,
+    //         timeout: 10000
+    //     }
+    //     //function for success call back argument
+    //     function successCallback(pos) {
+    //         myLat = pos.coords.latitude;
+    //         myLng = pos.coords.longitude;
+    //         // console.log(lat, lng);
+    //         map.setView([myLat, myLng], 12);
+    //         //create maker of geolocation
+    //         let marker = L.marker([myLat, myLng], { icon: userIcon });
+    //         marker.addTo(map)
+    //             .bindPopup(`
+    //                 This is my location</br>
+    //                 <button class="btn btn-success" onclick="setStart(${myLat},${myLng})">Set as Start</button>
+    //                 <button class="btn btn-danger" onclick="setEnd(${myLat},${myLng})">Set as End</button>
+    //                 `);
+    //         marker.on('mouseover', function (e) {
+    //             marker.openPopup();
+    //         });
+    //     }
+    //     //function for errorcall back argument
+    //     function errorCallback() {
+    //         alert("wrong");
+    //     }
+    //     navigator.geolocation.getCurrentPosition(successCallback, errorCallback, geoOps);
+    // })
+
 
     //SEARCH ACTIVITY FUNCTION
     let searchActivityLayer = L.layerGroup();
@@ -45,7 +65,7 @@ window.addEventListener("DOMContentLoaded", async function () {
     document.querySelector("#btnSearch").addEventListener("click", async function () {
         //show search options content
         let target = document.querySelector("#searchOptions").classList;
-        if (!target.contains("show")){
+        if (!target.contains("show")) {
             target.add("show");
         }
 
@@ -56,12 +76,25 @@ window.addEventListener("DOMContentLoaded", async function () {
             //see if near me check box is checked
             let nearMe = document.querySelector("#checkNearMe");
 
-            if (nearMe.checked){
-                locations = await geoLocateSearch(query,myLat,myLng);
+            if (nearMe.checked) {
+                map.setView([myLat, myLng], 14);
+                let marker = L.marker([myLat, myLng], { icon: userIcon });
+                marker.addTo(map)
+                    .bindPopup(`
+                        This is my location</br>
+                        <button class="btn btn-success" onclick="setStart(${myLat},${myLng})">Set as Start</button>
+                        <button class="btn btn-danger" onclick="setEnd(${myLat},${myLng})">Set as End</button>
+                        `);
+                marker.on('mouseover', function (e) {
+                    marker.openPopup();
+                });
+                locations = await geoLocateSearch(query, myLat, myLng);
 
             } else {
                 locations = await searchActivity(query);
             }
+
+
             console.log(locations);
             for (let loc of locations.results) {
                 let lat = loc.geocodes.main.latitude;
@@ -138,22 +171,23 @@ window.addEventListener("DOMContentLoaded", async function () {
                     markerIcon = hotelIcon;
                 }
                 //add markers to map
-                let marker = L.marker([lat, lng], { id:locationId, icon: markerIcon });
+                let marker = L.marker([lat, lng], { id: locationId, icon: markerIcon });
                 marker.addTo(searchActivityLayer)
                     .bindPopup(`
                     ${locName}</br>
                     <button class="btn btn-success" onclick="setStart(${lat}, ${lng})">Set as Start</button>
                     <button class="btn btn-danger" onclick="setEnd(${lat}, ${lng})">Set as End</button>
                     `);
+
                 //add marker functions
                 marker.on('mouseover', function (e) {
                     marker.openPopup();
                     //scroll to content card
                     let element = document.querySelector(`#${divLocationId}`);
-                    element.scrollIntoView({behavior:"smooth"});
+                    element.scrollIntoView({ behavior: "smooth" });
                 })
                 //open marker popup when clicking content card
-                document.querySelector(`#${divLocationId}`).addEventListener("mouseover", function(e){
+                document.querySelector(`#${divLocationId}`).addEventListener("mouseover", function (e) {
                     marker.openPopup();
                 })
             }
@@ -161,7 +195,7 @@ window.addEventListener("DOMContentLoaded", async function () {
         }
     })
 
-    
+
 
 
     //CLEAR SEARCH

@@ -26,37 +26,20 @@ navigator.geolocation.getCurrentPosition(successCallback, errorCallback, geoOps)
 window.addEventListener("DOMContentLoaded", async function () {
     //GEOLOCATE
     //add event listener for geolocate button
-    // document.querySelector("#geolocate").addEventListener("click", async function () {
-    //     //function for geoops argument
-    //     var geoOps = {
-    //         enableHighAccuracy: true,
-    //         timeout: 10000
-    //     }
-    //     //function for success call back argument
-    //     function successCallback(pos) {
-    //         myLat = pos.coords.latitude;
-    //         myLng = pos.coords.longitude;
-    //         // console.log(lat, lng);
-    //         map.setView([myLat, myLng], 12);
-    //         //create maker of geolocation
-    //         let marker = L.marker([myLat, myLng], { icon: userIcon });
-    //         marker.addTo(map)
-    //             .bindPopup(`
-    //                 This is my location</br>
-    //                 <button class="btn btn-success" onclick="setStart(${myLat},${myLng})">Set as Start</button>
-    //                 <button class="btn btn-danger" onclick="setEnd(${myLat},${myLng})">Set as End</button>
-    //                 `);
-    //         marker.on('mouseover', function (e) {
-    //             marker.openPopup();
-    //         });
-    //     }
-    //     //function for errorcall back argument
-    //     function errorCallback() {
-    //         alert("wrong");
-    //     }
-    //     navigator.geolocation.getCurrentPosition(successCallback, errorCallback, geoOps);
-    // })
-
+    document.querySelector("#geolocate").addEventListener("click", async function () {
+        map.setView([myLat, myLng], 12);
+        //create maker of geolocation
+        let marker = L.marker([myLat, myLng], { icon: userIcon });
+        marker.addTo(map)
+            .bindPopup(`
+                    This is my location</br>
+                    <button class="btn btn-success" onclick="setStart(${myLat},${myLng})">Set as Start</button>
+                    <button class="btn btn-danger" onclick="setEnd(${myLat},${myLng})">Set as End</button>
+                    `);
+        marker.on('mouseover', function (e) {
+            marker.openPopup();
+        });
+    })
 
     //SEARCH ACTIVITY FUNCTION
     let searchActivityLayer = L.layerGroup();

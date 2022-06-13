@@ -91,11 +91,12 @@ window.addEventListener("DOMContentLoaded", async function () {
                     console.log(e);
                 }
 
+                let divLocationId = "d" + fsq_id;
                 let locationId = "a" + fsq_id;
                 //add element to search content
                 let divElement = document.createElement("div");
                 divElement.innerHTML = `
-                <div class="card mt-3" style="width: 100%;">
+                <div id="${divLocationId}"  class="card mt-3" style="width: 100%;">
                     <div class="card-body">
                         <a data-bs-toggle="collapse" href="#${locationId}" role="button" aria-expanded="false" aria-controls="${locationId}">
                         <h6 class="card-title">${loc.name}</h6>
@@ -126,7 +127,7 @@ window.addEventListener("DOMContentLoaded", async function () {
                     markerIcon = hotelIcon;
                 }
                 //add markers to map
-                let marker = L.marker([lat, lng], { icon: markerIcon });
+                let marker = L.marker([lat, lng], { id:locationId, icon: markerIcon });
                 marker.addTo(searchActivityLayer)
                     .bindPopup(`
                     ${locName}</br>
@@ -136,11 +137,21 @@ window.addEventListener("DOMContentLoaded", async function () {
                 //add marker functions
                 marker.on('mouseover', function (e) {
                     marker.openPopup();
+                    //scroll to content card
+                    let element = document.querySelector(`#${divLocationId}`);
+                    element.scrollIntoView({behavior:"smooth"});
+                })
+                //open marker popup when clicking content card
+                document.querySelector(`#${divLocationId}`).addEventListener("mouseover", function(e){
+                    marker.openPopup();
                 })
             }
             searchActivityLayer.addTo(map);
         }
     })
+
+    
+
 
     //CLEAR SEARCH
     document.querySelector("#btnClearSearch").addEventListener("click", function () {

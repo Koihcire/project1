@@ -8,8 +8,8 @@ async function geoLocateSearch(query, myLat, myLng) {
         "params": {
             "query": query,
             "ll": myLat+","+myLng,
-            "radius": 2000,
-            "limit": 30,
+            "radius": 3000,
+            "limit": 20,
             "categories": "19014,17114"
         },
         "headers": {

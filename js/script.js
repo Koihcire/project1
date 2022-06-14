@@ -73,7 +73,7 @@ window.addEventListener("DOMContentLoaded", async function () {
                 });
                 locations = await geoLocateSearch(query, myLat, myLng);
 
-            } else {
+            } else if (!nearMe.checked){
                 locations = await searchActivity(query);
             }
 
@@ -126,7 +126,7 @@ window.addEventListener("DOMContentLoaded", async function () {
                 <div id="${divLocationId}"  class="card mt-3" style="width: 100%;">
                     <div class="card-body">
                         <a data-bs-toggle="collapse" href="#${locationId}" role="button" aria-expanded="false" aria-controls="${locationId}">
-                        <h6 class="card-title">${loc.name}</h6>
+                        <h6 class="card-title">${locName}</h6>
                         </a>
                         <div id="${locationId}" class="collapse">
                             <img src="${photoUrl}" style="width: 100%;">
@@ -146,15 +146,21 @@ window.addEventListener("DOMContentLoaded", async function () {
                 searchContent.appendChild(divElement);
 
                 //create markers
-                //set marker type according to category
+                //set marker type according to category. need to loop through object as some locations are assigned more than 1 category
                 let markerIcon = "";
-                if (loc.categories[0].id == "17114") {
-                    markerIcon = mallIcon;
-                } else if (loc.categories[0].id == "19014") {
-                    markerIcon = hotelIcon;
+                for (let c of loc.categories){
+                    console.log(c)
+                    if (c.id == "17114"){
+                        markerIcon = mallIcon;
+                        break;
+                    } else if (c.id == "19014"){
+                        markerIcon = hotelIcon;
+                        break;
+                    }
                 }
+
                 //add markers to map
-                let marker = L.marker([lat, lng], { id: locationId, icon: markerIcon });
+                let marker = L.marker([lat, lng], {icon: markerIcon });
                 marker.addTo(searchActivityLayer)
                     .bindPopup(`
                     ${locName}</br>

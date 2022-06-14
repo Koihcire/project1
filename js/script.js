@@ -42,7 +42,9 @@ window.addEventListener("DOMContentLoaded", async function () {
     })
 
     //SEARCH ACTIVITY FUNCTION
-    let searchActivityLayer = L.layerGroup();
+    // let searchActivityLayer = L.layerGroup();
+    let hotelsLayer = L.layerGroup();
+    let mallsLayer = L.layerGroup();
     let searchContent = document.querySelector("#searchContent");
 
     document.querySelector("#btnSearch").addEventListener("click", async function () {
@@ -73,7 +75,7 @@ window.addEventListener("DOMContentLoaded", async function () {
                 });
                 locations = await geoLocateSearch(query, myLat, myLng);
 
-            } else if (!nearMe.checked){
+            } else if (!nearMe.checked) {
                 locations = await searchActivity(query);
             }
 
@@ -148,25 +150,45 @@ window.addEventListener("DOMContentLoaded", async function () {
                 //create markers
                 //set marker type according to category. need to loop through object as some locations are assigned more than 1 category
                 let markerIcon = "";
-                for (let c of loc.categories){
+                for (let c of loc.categories) {
                     console.log(c)
-                    if (c.id == "17114"){
+                    if (c.id == "17114") {
                         markerIcon = mallIcon;
                         break;
-                    } else if (c.id == "19014"){
+                    } else if (c.id == "19014") {
                         markerIcon = hotelIcon;
                         break;
                     }
                 }
 
                 //add markers to map
-                let marker = L.marker([lat, lng], {icon: markerIcon });
-                marker.addTo(searchActivityLayer)
-                    .bindPopup(`
-                    ${locName}</br>
-                    <button class="btn btn-success" onclick="setStart(${lat}, ${lng})">Set as Start</button>
-                    <button class="btn btn-danger" onclick="setEnd(${lat}, ${lng})">Set as End</button>
-                    `);
+                let marker = L.marker([lat, lng], { icon: markerIcon });
+
+                for (let c of loc.categories) {
+                    if (c.id == "17114") {
+                        marker.addTo(mallsLayer)
+                            .bindPopup(`
+                                    ${locName}</br>
+                                    <button class="btn btn-success" onclick="setStart(${lat}, ${lng})">Set as Start</button>
+                                    <button class="btn btn-danger" onclick="setEnd(${lat}, ${lng})">Set as End</button>
+                                    `);
+                        break;
+                    } else if (c.id == "19014") {
+                        marker.addTo(hotelsLayer)
+                            .bindPopup(`
+                                    ${locName}</br>
+                                    <button class="btn btn-success" onclick="setStart(${lat}, ${lng})">Set as Start</button>
+                                    <button class="btn btn-danger" onclick="setEnd(${lat}, ${lng})">Set as End</button>
+                                    `);
+                        break;
+                    }
+                }
+                // marker.addTo(searchActivityLayer)
+                //     .bindPopup(`
+                //     ${locName}</br>
+                //     <button class="btn btn-success" onclick="setStart(${lat}, ${lng})">Set as Start</button>
+                //     <button class="btn btn-danger" onclick="setEnd(${lat}, ${lng})">Set as End</button>
+                //     `);
 
                 //add marker functions
                 marker.on('mouseover', function (e) {
@@ -180,7 +202,9 @@ window.addEventListener("DOMContentLoaded", async function () {
                     marker.openPopup();
                 })
             }
-            searchActivityLayer.addTo(map);
+            // searchActivityLayer.addTo(map);
+            mallsLayer.addTo(map);
+            hotelsLayer.addTo(map);
         }
     })
 
@@ -189,7 +213,9 @@ window.addEventListener("DOMContentLoaded", async function () {
 
     //CLEAR SEARCH
     document.querySelector("#btnClearSearch").addEventListener("click", function () {
-        searchActivityLayer.clearLayers();
+        // searchActivityLayer.clearLayers();
+        mallsLayer.clearLayers();
+        hotelsLayer.clearLayers();
         searchContent.innerHTML = `<p>no search results</p>`;
         document.querySelector("#txtSearch").value = "";
     })
@@ -210,9 +236,20 @@ window.addEventListener("DOMContentLoaded", async function () {
     })
     document.querySelector("#btnClearNavigate").addEventListener("click", function () {
         navigationLayer.clearLayers();
+        document.querySelector("#startPoint").value = "";
+        document.querySelector("#endPoint").value = "";
     })
 
+    let baseLayers = {
+        "Navigation": navigationLayer
+    };
+    let overlays = {
+        "Hotels": hotelsLayer,
+        "Malls": mallsLayer,
+    }
+    L.control.layers(baseLayers, overlays).addTo(map);
 })
+
 
 
 

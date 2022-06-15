@@ -3,6 +3,8 @@ let map = createMap(1.3521, 103.8198);
 let myLat = "";
 let myLng = "";
 
+let navigationLayer = L.layerGroup();
+let geoLocateLayer = L.layerGroup();
 //GEOLOCATE
 //function for geoops argument
 var geoOps = {
@@ -27,10 +29,10 @@ window.addEventListener("DOMContentLoaded", async function () {
     //GEOLOCATE
     //add event listener for geolocate button
     document.querySelector("#geolocate").addEventListener("click", async function () {
-        map.setView([myLat, myLng], 12);
+        map.setView([myLat, myLng], 17);
         //create maker of geolocation
         let marker = L.marker([myLat, myLng], { icon: userIcon });
-        marker.addTo(map)
+        marker.addTo(geoLocateLayer)
             .bindPopup(`
                     This is my location</br>
                     <button class="btn btn-success" onclick="setStart(${myLat},${myLng})">Set as Start</button>
@@ -39,6 +41,7 @@ window.addEventListener("DOMContentLoaded", async function () {
         marker.on('mouseover', function (e) {
             marker.openPopup();
         });
+        geoLocateLayer.addTo(map);
     })
 
     //SEARCH ACTIVITY FUNCTION
@@ -63,8 +66,9 @@ window.addEventListener("DOMContentLoaded", async function () {
 
             if (nearMe.checked) {
                 map.setView([myLat, myLng], 14);
+                L.circle([myLat, myLng], {radius:3000}).addTo(geoLocateLayer);
                 let marker = L.marker([myLat, myLng], { icon: userIcon });
-                marker.addTo(map)
+                marker.addTo(geoLocateLayer)
                     .bindPopup(`
                         This is my location</br>
                         <button class="btn btn-success" onclick="setStart(${myLat},${myLng})">Set as Start</button>
@@ -73,6 +77,7 @@ window.addEventListener("DOMContentLoaded", async function () {
                 marker.on('mouseover', function (e) {
                     marker.openPopup();
                 });
+                geoLocateLayer.addTo(map);
                 locations = await geoLocateSearch(query, myLat, myLng);
 
             } else if (!nearMe.checked) {
@@ -189,15 +194,27 @@ window.addEventListener("DOMContentLoaded", async function () {
                     }
                 }
 
-                //add marker functions
+                //add marker mouserover functions
                 marker.on('mouseover', function (e) {
                     marker.openPopup();
                     //scroll to content card
                     let element = document.querySelector(`#${divLocationId}`);
                     element.scrollIntoView({ behavior: "smooth" });
                 })
+                marker.on("mouseout", function(e){
+                    marker.closePopup();
+                })
+
+                //add marker click functions
+                marker.on("click", function(e){
+                    // map.setView(marker.getLatLng(),17)
+                    map.panTo(marker.getLatLng(),{animate:true});
+                })
+
                 //open marker popup when clicking content card
                 document.querySelector(`#${divLocationId}`).addEventListener("mouseover", function (e) {
+                    map.panTo(marker.getLatLng(),{animate:true});
+                    // map.setView(marker.getLatLng(),17)
                     marker.openPopup();
                 })
             }
@@ -215,6 +232,7 @@ window.addEventListener("DOMContentLoaded", async function () {
         // searchActivityLayer.clearLayers();
         mallsLayer.clearLayers();
         hotelsLayer.clearLayers();
+        geoLocateLayer.clearLayers();
         searchContent.innerHTML = `<p>no search results</p>`;
         document.querySelector("#txtSearch").value = "";
     })

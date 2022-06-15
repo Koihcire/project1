@@ -20,10 +20,10 @@
 </head>
 
 <body>
-    <div id="map-container">
+    
+    <div id="map-container" style="position:relative; overflow: hidden;">
         <div id="search-container" class="container rounded-3"
-            style="position: absolute; z-index: 314159; width:33%; background-color: rgba(255,255,255,0.8); margin:5px;">
-            
+            style="position: absolute; z-index: 314159; width:500px; background-color: rgba(255,255,255,0.8); margin:5px;">
             <!-- SEARCH BAR -->
             <div id="searchBar-container" class="container row g-1">
                 <input type="text" id="txtSearch" placeholder="search for shopping malls"
@@ -37,6 +37,18 @@
             <div class="form-check">
                 <input type="checkbox" class="form-check-input" id="checkNearMe">
                 <label class="form-check-label" for="checkNearMe">Near Me</label>
+            </div>
+            <!-- filter checkbox -->
+            <div class="container">
+                <h5>Show</h5>
+            <div class="form-check form-check-inline">
+                <input type="checkbox" class="form-check-input" name="filter" id="hotels" checked>
+                <label for="hotels" class="form-check-label">Hotels</label>
+            </div>
+            <div class="form-check form-check-inline">    
+                <input type="checkbox" class="form-check-input" name="filter" id="malls" checked>
+                <label for="malls" class="form-check-label">Malls</label>
+            </div>
             </div>
 
             <!-- SEARCH OPTIONS -->
@@ -65,7 +77,7 @@
                 <div class="tab-content" id="myTabContent">
                     <!-- search content -->
                     <div class="tab-pane fade show active" id="searchContent" role="tabpanel"
-                        aria-labelledby="searchContent-tab" style="max-height: 80vh; overflow: scroll; width: 100%;">
+                        aria-labelledby="searchContent-tab" style="max-height: 70vh; overflow: scroll; width: 100%;">
                         <p>no search results</p>
                     </div>
                     <!-- navigation content -->
@@ -97,11 +109,7 @@
             <div id="moreToggle" class="container d-flex justify-content-center">
                 <a href="#searchOptions" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="searchOptions"><img src="images/more.png" style="height:20px;"></a>
             </div>
-
         </div>
-
-        
-
         <div id="map"></div>
     </div>
 

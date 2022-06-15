@@ -120,12 +120,29 @@ window.addEventListener("DOMContentLoaded", async function () {
                     console.log(e);
                 }
 
+                //create custom marker icons, add category details to content cards
+                //set marker type according to category. need to loop through object as some locations are assigned more than 1 category
+                let locationCategory = "";
+                let markerIcon = "";
+                for (let c of loc.categories) {
+                    console.log(c)
+                    if (c.id == "17114") {
+                        markerIcon = mallIcon;
+                        locationCategory = "malls";
+                        break;
+                    } else if (c.id == "19014") {
+                        markerIcon = hotelIcon;
+                        locationCategory = "hotels";
+                        break;
+                    }
+                }
+
                 let divLocationId = "d" + fsq_id;
                 let locationId = "a" + fsq_id;
                 //add element to search content
                 let divElement = document.createElement("div");
                 divElement.innerHTML = `
-                <div id="${divLocationId}"  class="card mt-3" style="width: 100%;">
+                <div id="${divLocationId}" class="card mt-3 ${locationCategory}" style="width: 100%;">
                     <div class="card-body">
                         <a data-bs-toggle="collapse" href="#${locationId}" role="button" aria-expanded="false" aria-controls="${locationId}">
                         <h6 class="card-title">${locName}</h6>
@@ -147,19 +164,7 @@ window.addEventListener("DOMContentLoaded", async function () {
                 `;
                 searchContent.appendChild(divElement);
 
-                //create markers
-                //set marker type according to category. need to loop through object as some locations are assigned more than 1 category
-                let markerIcon = "";
-                for (let c of loc.categories) {
-                    console.log(c)
-                    if (c.id == "17114") {
-                        markerIcon = mallIcon;
-                        break;
-                    } else if (c.id == "19014") {
-                        markerIcon = hotelIcon;
-                        break;
-                    }
-                }
+
 
                 //add markers to map
                 let marker = L.marker([lat, lng], { icon: markerIcon });
@@ -183,12 +188,6 @@ window.addEventListener("DOMContentLoaded", async function () {
                         break;
                     }
                 }
-                // marker.addTo(searchActivityLayer)
-                //     .bindPopup(`
-                //     ${locName}</br>
-                //     <button class="btn btn-success" onclick="setStart(${lat}, ${lng})">Set as Start</button>
-                //     <button class="btn btn-danger" onclick="setEnd(${lat}, ${lng})">Set as End</button>
-                //     `);
 
                 //add marker functions
                 marker.on('mouseover', function (e) {
@@ -248,6 +247,42 @@ window.addEventListener("DOMContentLoaded", async function () {
         "Malls": mallsLayer,
     }
     L.control.layers(baseLayers, overlays).addTo(map);
+
+
+
+    //add filter function on content cards
+
+    document.querySelector("#hotels").addEventListener("click", function () {
+        if (document.querySelector("#hotels").checked) {
+            map.addLayer(hotelsLayer);
+            let hotelCards = document.querySelectorAll(".hotels");
+            for (let hotel of hotelCards) {
+                hotel.style.display = "";
+            }
+        } else if (!document.querySelector("#hotels").checked) {
+            map.removeLayer(hotelsLayer);
+            let hotelCards = document.querySelectorAll(".hotels");
+            for (let hotel of hotelCards) {
+                hotel.style.display = "none";
+            }
+        }
+    })
+
+    document.querySelector("#malls").addEventListener("click", function () {
+        if (document.querySelector("#malls").checked) {
+            map.addLayer(mallsLayer);
+            let mallCards = document.querySelectorAll(".malls");
+            for (let mall of mallCards) {
+                mall.style.display = "";
+            }
+        } else if (!document.querySelector("#malls").checked) {
+            map.removeLayer(mallsLayer);
+            let mallCards = document.querySelectorAll(".malls");
+            for (let mall of mallCards) {
+                mall.style.display = "none";
+            }
+        }
+    })
 })
 
 

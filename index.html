@@ -20,10 +20,10 @@
 </head>
 
 <body>
-    
+
     <div id="map-container" style="position:relative; overflow: hidden;">
         <div id="search-container" class="container rounded-3"
-            style="position: absolute; z-index: 314159; width:500px; background-color: rgba(255,255,255,0.8); margin:5px;">
+            style="position: absolute; z-index: 314159; width:450px; background-color: rgba(255,255,255,0.8); margin:5px;">
             <!-- SEARCH BAR -->
             <div id="searchBar-container" class="container row g-1">
                 <input type="text" id="txtSearch" placeholder="search for shopping malls"
@@ -40,15 +40,15 @@
             </div>
             <!-- filter checkbox -->
             <div class="container">
-                <h5>Show</h5>
-            <div class="form-check form-check-inline">
-                <input type="checkbox" class="form-check-input" name="filter" id="hotels" checked>
-                <label for="hotels" class="form-check-label">Hotels</label>
-            </div>
-            <div class="form-check form-check-inline">    
-                <input type="checkbox" class="form-check-input" name="filter" id="malls" checked>
-                <label for="malls" class="form-check-label">Malls</label>
-            </div>
+                <p style="display:inline">Show: </p>
+                <div class="form-check form-check-inline ms-3">
+                    <input type="checkbox" class="form-check-input" name="filter" id="hotels" checked>
+                    <label for="hotels" class="form-check-label">Hotels</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="checkbox" class="form-check-input" name="filter" id="malls" checked>
+                    <label for="malls" class="form-check-label">Malls</label>
+                </div>
             </div>
 
             <!-- SEARCH OPTIONS -->
@@ -101,13 +101,21 @@
                     </div>
                     <!-- feedback content -->
                     <div class="tab-pane fade" id="feedback" role="tabpanel" aria-labelledby="feedback-tab">
-                        <h1>THIS IS A FORM</h1>
+                        <p>Reach out to us to improve our services!</p>
+                        <input type="text" class="form-control form-control-sm mt-3" id="name"
+                            placeholder="Enter Your Name">
+                        <input type="text" class="form-control form-control-sm mt-3" id="email"
+                            placeholder="Valid Email Address (name@email.com)">
+                        <textarea class="form-control form-control-sm mt-3" id="feedbackContent"
+                            placeholder="Please provide your feedback"></textarea>
+                        <button class="btn btn-sm btn-primary mt-3" id="submit">Submit</button>
                     </div>
                 </div>
             </div>
             <!-- MORE TOGGLE -->
             <div id="moreToggle" class="container d-flex justify-content-center">
-                <a href="#searchOptions" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="searchOptions"><img src="images/more.png" style="height:20px;"></a>
+                <a href="#searchOptions" data-bs-toggle="collapse" role="button" aria-expanded="false"
+                    aria-controls="searchOptions"><img src="images/more.png" style="height:20px;"></a>
             </div>
         </div>
         <div id="map"></div>

@@ -57,7 +57,11 @@ window.addEventListener("DOMContentLoaded", async function () {
             target.add("show");
         }
 
-        searchContent.innerHTML = "";
+        //turn off the noSearchResults div
+        document.querySelector("#noSearchResults").style.display = "none";
+
+        //do not reset the searchContent!
+        // searchContent.innerHTML = "";
         let query = document.querySelector("#txtSearch").value;
         let locations = "";
         if (query) {
@@ -233,7 +237,9 @@ window.addEventListener("DOMContentLoaded", async function () {
         mallsLayer.clearLayers();
         hotelsLayer.clearLayers();
         geoLocateLayer.clearLayers();
-        searchContent.innerHTML = `<p>no search results</p>`;
+        document.querySelector("#searchContent").innerHTML = "";
+        //turn on the noSearchResults div
+        document.querySelector("#noSearchResults").style.display = "block";
         document.querySelector("#txtSearch").value = "";
     })
 

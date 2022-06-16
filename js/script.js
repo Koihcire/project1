@@ -179,16 +179,16 @@ window.addEventListener("DOMContentLoaded", async function () {
                         marker.addTo(mallsLayer)
                             .bindPopup(`
                                     ${locName}</br>
-                                    <button class="btn btn-success" onclick="setStart(${lat}, ${lng})">Set as Start</button>
-                                    <button class="btn btn-danger" onclick="setEnd(${lat}, ${lng})">Set as End</button>
+                                    <button class="btn btn-success" onclick="setStart(${lat}, ${lng}, '${locName}')">Set as Start</button>
+                                    <button class="btn btn-danger" onclick="setEnd(${lat}, ${lng}, '${locName}')">Set as End</button>
                                     `);
                         break;
                     } else if (c.id == "19014") {
                         marker.addTo(hotelsLayer)
                             .bindPopup(`
                                     ${locName}</br>
-                                    <button class="btn btn-success" onclick="setStart(${lat}, ${lng})">Set as Start</button>
-                                    <button class="btn btn-danger" onclick="setEnd(${lat}, ${lng})">Set as End</button>
+                                    <button class="btn btn-success" onclick="setStart(${lat}, ${lng}, '${locName}')">Set as Start</button>
+                                    <button class="btn btn-danger" onclick="setEnd(${lat}, ${lng}, '${locName}')">Set as End</button>
                                     `);
                         break;
                     }
@@ -201,9 +201,9 @@ window.addEventListener("DOMContentLoaded", async function () {
                     let element = document.querySelector(`#${divLocationId}`);
                     element.scrollIntoView({ behavior: "smooth" });
                 })
-                marker.on("mouseout", function(e){
-                    marker.closePopup();
-                })
+                // marker.on("mouseout", function(e){
+                //     marker.closePopup();
+                // })
 
                 //add marker click functions
                 marker.on("click", function(e){
@@ -240,8 +240,8 @@ window.addEventListener("DOMContentLoaded", async function () {
     //NAVIGATION FUNCTION
     let navigationLayer = L.layerGroup();
     document.querySelector("#btnNavigate").addEventListener("click", async function () {
-        let origin = document.querySelector("#startPoint").value;
-        let destination = document.querySelector("#endPoint").value;
+        let origin = document.querySelector("#startPoint").data;
+        let destination = document.querySelector("#endPoint").data;
         navigationLayer.clearLayers();
         // console.log("origin :" + origin + "destination : " + destination);
         let navigateRoute = await navigate(origin, destination);

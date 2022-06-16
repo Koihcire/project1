@@ -19,15 +19,17 @@ async function navigate(origin,destination) {
     return response.data;
 }
 
-function setStart(a,b){
+function setStart(lat,lng,locName){
     let start = document.querySelector("#startPoint");
-    start.value = a + "," + b;
+    start.data = lat + "," + lng;
+    start.value = locName;
     // return c;
 }
 
-function setEnd(a,b){
+function setEnd(lat,lng,locName){
     let end = document.querySelector("#endPoint");
-    end.value = a + "," + b;
+    end.data = lat + "," + lng;
+    end.value = locName;
     // return c;
 }
 

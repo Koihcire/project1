@@ -10,7 +10,7 @@ async function geoLocateSearch(query, myLat, myLng) {
             "ll": myLat+","+myLng,
             "radius": 3000,
             "limit": 40,
-            "categories": "19014,17114"
+            "categories": "19014,17114,13065,16007"
         },
         "headers": {
             "Accept": "application/json",
@@ -28,7 +28,7 @@ async function searchActivity(query) {
             "query": query,
             "near": "singapore",
             "limit" : 40,
-            "categories" : "19014,17114" //19014 hotel, 17114 shopping mall
+            "categories" : "19014,17114,13065,16007" //19014 hotel, 17114 shopping mall, 13065 restaurant, 16007 landmarks
         },
         "headers": {
             "Accept": "application/json",

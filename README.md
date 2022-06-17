@@ -15,3 +15,7 @@ https://www.flaticon.com/packs/font-awesome/5
 
 this is the icon park for the logos links
 https://www.flaticon.com/packs/social-16
+
+<a href="https://www.flaticon.com/free-icons/restaurant" title="restaurant icons">Restaurant icons created by mavadee - Flaticon</a>
+
+<a href="https://www.flaticon.com/free-icons/maps-and-location" title="maps and location icons">Maps and location icons created by Flat Icons - Flaticon</a>

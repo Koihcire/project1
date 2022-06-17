@@ -48,6 +48,8 @@ window.addEventListener("DOMContentLoaded", async function () {
     // let searchActivityLayer = L.layerGroup();
     let hotelsLayer = L.layerGroup();
     let mallsLayer = L.layerGroup();
+    let restaurantsLayer = L.layerGroup();
+    let attractionsLayer = L.layerGroup();
     let searchContent = document.querySelector("#searchContent");
 
     document.querySelector("#btnSearch").addEventListener("click", async function () {
@@ -143,6 +145,14 @@ window.addEventListener("DOMContentLoaded", async function () {
                         markerIcon = hotelIcon;
                         locationCategory = "hotels";
                         break;
+                    } else if (c.id == "13065"){
+                        markerIcon = restaurantIcon;
+                        locationCategory = "restaurants";
+                        break;
+                    } else if (c.id == "16007"){
+                        markerIcon = attractionIcon;
+                        locationCategory = "attractions";
+                        break;
                     }
                 }
 
@@ -195,11 +205,27 @@ window.addEventListener("DOMContentLoaded", async function () {
                                     <button class="btn btn-danger" onclick="setEnd(${lat}, ${lng}, '${locName}')">Set as End</button>
                                     `);
                         break;
+                    } else if (c.id == "13065") {
+                        marker.addTo(restaurantsLayer)
+                            .bindPopup(`
+                                ${locName}</br>
+                                <button class="btn btn-success" onclick="setStart(${lat}, ${lng}, '${locName}')">Set as Start</button>
+                                <button class="btn btn-danger" onclick="setEnd(${lat}, ${lng}, '${locName}')">Set as End</button>
+                                `);
+                        break;
+                    } else if (c.id == "16007"){
+                        marker.addTo(attractionsLayer)
+                            .bindPopup(`
+                            ${locName}</br>
+                            <button class="btn btn-success" onclick="setStart(${lat}, ${lng}, '${locName}')">Set as Start</button>
+                            <button class="btn btn-danger" onclick="setEnd(${lat}, ${lng}, '${locName}')">Set as End</button>
+                            `);
+                        break;
                     }
                 }
 
                 //add marker mouserover functions
-                marker.on('mouseover', function (e) {
+                marker.on('click', function (e) {
                     marker.openPopup();
                     //scroll to content card
                     let element = document.querySelector(`#${divLocationId}`);
@@ -225,6 +251,8 @@ window.addEventListener("DOMContentLoaded", async function () {
             // searchActivityLayer.addTo(map);
             mallsLayer.addTo(map);
             hotelsLayer.addTo(map);
+            restaurantsLayer.addTo(map);
+            attractionsLayer.addTo(map);
         }
     })
 
@@ -538,6 +566,39 @@ window.addEventListener("DOMContentLoaded", async function () {
             }
         }
     })
+
+    document.querySelector("#restaurants").addEventListener("click", function () {
+        if (document.querySelector("#restaurants").checked) {
+            map.addLayer(restaurantsLayer);
+            let restaurantsCards = document.querySelectorAll(".restaurants");
+            for (let restaurant of restaurantsCards) {
+                restaurant.style.display = "";
+            }
+        } else if (!document.querySelector("#restaurants").checked) {
+            map.removeLayer(restaurantsLayer);
+            let restaurantsCards = document.querySelectorAll(".restaurants");
+            for (let restaurant of restaurantsCards) {
+                restaurant.style.display = "none";
+            }
+        }
+    })
+
+    document.querySelector("#attractions").addEventListener("click", function () {
+        if (document.querySelector("#attractions").checked) {
+            map.addLayer(attractionsLayer);
+            let attractionsCards = document.querySelectorAll(".attractions");
+            for (let attraction of attractionsCards) {
+                attraction.style.display = "";
+            }
+        } else if (!document.querySelector("#attractions").checked) {
+            map.removeLayer(attractionsLayer);
+            let attractionsCards = document.querySelectorAll(".attractions");
+            for (let attraction of attractionsCards) {
+                attraction.style.display = "none";
+            }
+        }
+    })
+
 })
 
 

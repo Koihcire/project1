@@ -35,5 +35,15 @@ var userIcon = L.icon({
     iconSize: [40, 40],
 });
 
+var restaurantIcon = L.icon({
+    iconUrl: "images/restaurant.png",
+    iconSize: [40,40],
+})
+
+var attractionIcon = L.icon({
+    iconUrl: "images/attraction.png",
+    iconSize: [40,40],
+})
+
 
 // <a href="https://www.flaticon.com/free-icons/maps-and-location" title="maps-and-location icons">Maps-and-location icons created by adrianadam - Flaticon</a>

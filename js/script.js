@@ -35,8 +35,8 @@ window.addEventListener("DOMContentLoaded", async function () {
         marker.addTo(geoLocateLayer)
             .bindPopup(`
                     This is my location</br>
-                    <button class="btn btn-success" onclick="setStart(${myLat},${myLng})">Set as Start</button>
-                    <button class="btn btn-danger" onclick="setEnd(${myLat},${myLng})">Set as End</button>
+                    <button class="btn btn-success" onclick="setStart(${myLat},${myLng}, 'My Location')">Set as Start</button>
+                    <button class="btn btn-danger" onclick="setEnd(${myLat},${myLng}, 'My Location')">Set as End</button>
                     `);
         marker.on('mouseover', function (e) {
             marker.openPopup();

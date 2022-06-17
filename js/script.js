@@ -203,7 +203,7 @@ window.addEventListener("DOMContentLoaded", async function () {
                     marker.openPopup();
                     //scroll to content card
                     let element = document.querySelector(`#${divLocationId}`);
-                    element.scrollIntoView({ behavior: "smooth" });
+                    element.scrollIntoView({ behavior: "smooth", block: "nearest", inline:"start" });
                 })
                 // marker.on("mouseout", function(e){
                 //     marker.closePopup();

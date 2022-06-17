@@ -1,4 +1,6 @@
-
+html{
+    overflow: hidden;
+}
 
 #map {
     height: 100vh;

@@ -19,7 +19,15 @@ function createMap(lat, lng) {
     return map;
 }
 
-//set up icon
+//INITIALISE LAYERS
+let navigationLayer = L.layerGroup();
+let geoLocateLayer = L.layerGroup();
+let hotelsLayer = L.layerGroup();
+let mallsLayer = L.layerGroup();
+let restaurantsLayer = L.layerGroup();
+let attractionsLayer = L.layerGroup();
+
+//SET UP ICONS
 var mallIcon = L.icon({
     iconUrl: "images/mall.png",
     iconSize: [40, 40],

@@ -5,6 +5,12 @@ let myLng = "";
 
 let navigationLayer = L.layerGroup();
 let geoLocateLayer = L.layerGroup();
+let hotelsLayer = L.layerGroup();
+let mallsLayer = L.layerGroup();
+let restaurantsLayer = L.layerGroup();
+let attractionsLayer = L.layerGroup();
+let searchCardContent = document.querySelector("#searchCardContent");
+
 //GEOLOCATE
 //function for geoops argument
 var geoOps = {
@@ -23,35 +29,144 @@ function errorCallback() {
 }
 navigator.geolocation.getCurrentPosition(successCallback, errorCallback, geoOps);
 
+// create function for geolocate marker creation
+function geolocateMarker(myLat, myLng, geoLocateLayer,map){
+    let marker = L.marker([myLat, myLng], { icon: userIcon });
+    marker.addTo(geoLocateLayer)
+        .bindPopup(`
+                My location</br>
+                <button class="btn btn-success" onclick="setStart(${myLat},${myLng}, 'My Location')">Set as Start</button>
+                <button class="btn btn-danger" onclick="setEnd(${myLat},${myLng}, 'My Location')">Set as End</button>
+                `);
+    marker.on('mouseover', function (e) {
+        marker.openPopup();
+    });
+    geoLocateLayer.addTo(map);
+}
+
+//function for turn by turn navigation
+function turnByturn(step){
+    let stepTravelMode = "";
+    let stepHtml = "";
+    let stepDist = "";
+    let stepTransit = "";
+
+    let cardDiv = document.createElement("div");
+    cardDiv.className = "card";
+    let cardBodyDiv = document.createElement("div");
+    cardBodyDiv.className = "card-body";
+
+    if (step.travelMode == "WALKING") {
+        stepTravelMode = step.travelMode;
+
+        if (step.htmlInstructions) {
+            stepHtml = step.htmlInstructions;
+        }
+        if (step.distance) {
+            stepDist = step.distance;
+        }
+        if (step.transitDetail) {
+            stepTransit = step.transitDetail;
+        }
+
+        let stepDiv = document.createElement("div");
+        stepDiv.innerHTML = `
+            <h5>${stepTravelMode}</h5>
+            <h6>${stepHtml}</h6>
+            `;
+
+        for (substep of step.steps) {
+            let substepTravelMode = "";
+            let substepHtml = "";
+            let substepManeuver = "";
+            if (substep.travelMode) {
+                substepTravelMode = substep.travelMode;
+            }
+            if (substep.htmlInstructions) {
+                substepHtml = substep.htmlInstructions;
+            }
+            if (substep.maneuver) {
+                substepManeuver = substep.maneuver;
+            }
+
+            let substepDiv = document.createElement("div");
+            substepDiv.className = "card-text";
+            substepDiv.innerHTML = `
+                <p>${substepTravelMode} </br>
+                ${substepHtml} </br>
+                ${substepManeuver}</p>    
+                `;
+
+            stepDiv.appendChild(substepDiv);
+        }
+        cardBodyDiv.appendChild(stepDiv);
+        cardDiv.appendChild(cardBodyDiv);
+
+    }
+
+    if (step.travelMode == "TRANSIT") {
+        stepTravelMode = step.travelMode;
+        let vehicleName = "";
+        let departureStop = "";
+        let departureTime = "";
+        let arrivalStop = "";
+        let arrivalTime = "";
+        let numOfStops = "";
+
+        if (step.htmlInstructions) {
+            step.Html = step.htmlInstructions;
+        }
+        if (step.transitDetail.line.vehicle.name) {
+            vehicleName = step.transitDetail.line.vehicle.name;
+        }
+        if (step.transitDetail.departureStop.name) {
+            departureStop = step.transitDetail.departureStop.name;
+        }
+        if (step.transitDetail.departureTime) {
+            departureTime = step.transitDetail.departureTime;
+        }
+        if (step.transitDetail.arrivalStop.name) {
+            arrivalStop = step.transitDetail.arrivalStop.name;
+        }
+        if (step.transitDetail.arrivalTime) {
+            arrivalTime = step.transitDetail.arrivalTime;
+        }
+        if (step.transitDetail.numOfStops) {
+            numOfStops = step.transitDetail.numOfStops;
+        }
+
+        let stepDiv = document.createElement("div");
+        stepDiv.innerHTML = `
+                <h5>${stepTravelMode}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">${stepHtml}</h6>
+                <div class="card-text">
+                    <p>
+                        ${vehicleName} </br>
+                        ${departureStop} </br>
+                        ${departureTime} </br>
+                        ${arrivalStop} </br>
+                        ${arrivalTime} </br>
+                        ${numOfStops}
+                    </p>
+                </div>
+                `;
+        cardBodyDiv.appendChild(stepDiv);
+        cardDiv.appendChild(cardBodyDiv);
+    }
+navContent.appendChild(cardDiv);    
+}
 
 //LOAD EVENT LISTENERS
 window.addEventListener("DOMContentLoaded", async function () {
-    //GEOLOCATE
-    //add event listener for geolocate button
+
+    //GEOLOCATE EVENT LISTENER
     document.querySelector("#geolocate").addEventListener("click", async function () {
         map.setView([myLat, myLng], 17);
-        //create maker of geolocation
-        let marker = L.marker([myLat, myLng], { icon: userIcon });
-        marker.addTo(geoLocateLayer)
-            .bindPopup(`
-                    My location</br>
-                    <button class="btn btn-success" onclick="setStart(${myLat},${myLng}, 'My Location')">Set as Start</button>
-                    <button class="btn btn-danger" onclick="setEnd(${myLat},${myLng}, 'My Location')">Set as End</button>
-                    `);
-        marker.on('mouseover', function (e) {
-            marker.openPopup();
-        });
-        geoLocateLayer.addTo(map);
+        // create geolocate marker
+        geolocateMarker(myLat, myLng, geoLocateLayer,map);
     })
 
-    //SEARCH ACTIVITY FUNCTION
-    // let searchActivityLayer = L.layerGroup();
-    let hotelsLayer = L.layerGroup();
-    let mallsLayer = L.layerGroup();
-    let restaurantsLayer = L.layerGroup();
-    let attractionsLayer = L.layerGroup();
-    let searchCardContent = document.querySelector("#searchCardContent");
-
+    //SEARCH EVENT LISTENER (trigger on enter)
     document.querySelector("#txtSearch").addEventListener("keyup", function (event) {
         if (event.key === "Enter") {
             async function search() {
@@ -75,41 +190,33 @@ window.addEventListener("DOMContentLoaded", async function () {
                     if (nearMe.checked) {
                         map.setView([myLat, myLng], 14);
                         L.circle([myLat, myLng], { radius: 3000 }).addTo(geoLocateLayer);
-                        let marker = L.marker([myLat, myLng], { icon: userIcon });
-                        marker.addTo(geoLocateLayer)
-                            .bindPopup(`
-                                My location</br>
-                                <button class="btn btn-success" onclick="setStart(${myLat},${myLng}, 'My Location')">Set as Start</button>
-                                <button class="btn btn-danger" onclick="setEnd(${myLat},${myLng}, 'My Location')">Set as End</button>
-                                `);
-                        marker.on('mouseover', function (e) {
-                            marker.openPopup();
-                        });
-                        geoLocateLayer.addTo(map);
+                        // create geolocate marker
+                        geolocateMarker(myLat, myLng, geoLocateLayer,map)
+                        //pull locations data with added gelocate ll
                         locations = await geoLocateSearch(query, myLat, myLng);
                     } else if (!nearMe.checked) {
+                        // pull locations data without geolocate ll
                         locations = await searchActivity(query);
                     }
-
-
                     console.log(locations);
+
+                    // EXTRACT CORE DATA FROM FOURSQUARE API
                     for (let loc of locations.results) {
                         let lat = loc.geocodes.main.latitude;
                         let lng = loc.geocodes.main.longitude;
                         let locName = loc.name;
-
-                        // //extract location details
                         let fsq_id = loc.fsq_id;
                         // console.log(fsq_id);
+
+                        // EXTRACT SUPPORTING DATA USING FSQ_ID
                         let detail = await activityDetails(fsq_id);
                         // console.log(detail);
-                        //grab description
+                        //extract location description
                         let description = "";
                         if (detail.description) {
                             description = detail.description;
                         }
-
-                        //grab photo
+                        //extract photo url
                         let photoUrl = "";
                         try {
                             if (detail.photos[0].prefix) {
@@ -118,21 +225,18 @@ window.addEventListener("DOMContentLoaded", async function () {
                         } catch (e) {
                             console.log(e)
                         }
-
-
-                        //grab website
+                        //extract website url
                         let websiteUrl = "";
                         if (detail.website) {
                             websiteUrl = detail.website;
                         }
-
-                        //grab hours
+                        //extract opening hours overview
                         let openingHours = "";
                         if (detail.hours.display) {
                             openingHours = detail.hours.display;
                         }
 
-                        //create custom marker icons
+                        //CREATE CUSTOM MARKERS BY CATEGORY
                         //set marker type according to category. need to loop through object as some locations are assigned more than 1 category
                         let locationCategory = "";
                         let markerIcon = "";
@@ -250,7 +354,7 @@ window.addEventListener("DOMContentLoaded", async function () {
         }
     })
 
-    //CLEAR SEARCH
+    //CLEAR SEARCH EVENT LISTENER
     document.querySelector("#btnClearSearch").addEventListener("click", function () {
         // searchActivityLayer.clearLayers();
         mallsLayer.clearLayers();
@@ -264,8 +368,7 @@ window.addEventListener("DOMContentLoaded", async function () {
         document.querySelector("#txtSearch").value = "";
     })
 
-    //NAVIGATION FUNCTION
-    let navigationLayer = L.layerGroup();
+    //NAVIGATION EVENT LISTENER
     document.querySelector("#btnNavigate").addEventListener("click", async function () {
         let origin = document.querySelector("#startPoint").data;
         let destination = document.querySelector("#endPoint").data;
@@ -275,124 +378,9 @@ window.addEventListener("DOMContentLoaded", async function () {
         console.log(navigateRoute);
 
         //create turn by turn cards on navigation content
-
         let navContent = document.querySelector("#navContent");
-
         let leg1 = navigateRoute.data.routes[0].legs[0];
         let leg2 = navigateRoute.data.routes[0].legs[4];
-
-        //function for turn by turn navigation
-        function turnByturn(step){
-                let stepTravelMode = "";
-                let stepHtml = "";
-                let stepDist = "";
-                let stepTransit = "";
-
-                let cardDiv = document.createElement("div");
-                cardDiv.className = "card";
-                let cardBodyDiv = document.createElement("div");
-                cardBodyDiv.className = "card-body";
-
-                if (step.travelMode == "WALKING") {
-                    stepTravelMode = step.travelMode;
-
-                    if (step.htmlInstructions) {
-                        stepHtml = step.htmlInstructions;
-                    }
-                    if (step.distance) {
-                        stepDist = step.distance;
-                    }
-                    if (step.transitDetail) {
-                        stepTransit = step.transitDetail;
-                    }
-
-                    let stepDiv = document.createElement("div");
-                    stepDiv.innerHTML = `
-                        <h5>${stepTravelMode}</h5>
-                        <h6>${stepHtml}</h6>
-                        `;
-
-                    for (substep of step.steps) {
-                        let substepTravelMode = "";
-                        let substepHtml = "";
-                        let substepManeuver = "";
-                        if (substep.travelMode) {
-                            substepTravelMode = substep.travelMode;
-                        }
-                        if (substep.htmlInstructions) {
-                            substepHtml = substep.htmlInstructions;
-                        }
-                        if (substep.maneuver) {
-                            substepManeuver = substep.maneuver;
-                        }
-
-                        let substepDiv = document.createElement("div");
-                        substepDiv.className = "card-text";
-                        substepDiv.innerHTML = `
-                            <p>${substepTravelMode} </br>
-                            ${substepHtml} </br>
-                            ${substepManeuver}</p>    
-                            `;
-
-                        stepDiv.appendChild(substepDiv);
-                    }
-                    cardBodyDiv.appendChild(stepDiv);
-                    cardDiv.appendChild(cardBodyDiv);
-
-                }
-
-                if (step.travelMode == "TRANSIT") {
-                    stepTravelMode = step.travelMode;
-                    let vehicleName = "";
-                    let departureStop = "";
-                    let departureTime = "";
-                    let arrivalStop = "";
-                    let arrivalTime = "";
-                    let numOfStops = "";
-
-                    if (step.htmlInstructions) {
-                        step.Html = step.htmlInstructions;
-                    }
-                    if (step.transitDetail.line.vehicle.name) {
-                        vehicleName = step.transitDetail.line.vehicle.name;
-                    }
-                    if (step.transitDetail.departureStop.name) {
-                        departureStop = step.transitDetail.departureStop.name;
-                    }
-                    if (step.transitDetail.departureTime) {
-                        departureTime = step.transitDetail.departureTime;
-                    }
-                    if (step.transitDetail.arrivalStop.name) {
-                        arrivalStop = step.transitDetail.arrivalStop.name;
-                    }
-                    if (step.transitDetail.arrivalTime) {
-                        arrivalTime = step.transitDetail.arrivalTime;
-                    }
-                    if (step.transitDetail.numOfStops) {
-                        numOfStops = step.transitDetail.numOfStops;
-                    }
-
-                    let stepDiv = document.createElement("div");
-                    stepDiv.innerHTML = `
-                            <h5>${stepTravelMode}</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">${stepHtml}</h6>
-                            <div class="card-text">
-                                <p>
-                                    ${vehicleName} </br>
-                                    ${departureStop} </br>
-                                    ${departureTime} </br>
-                                    ${arrivalStop} </br>
-                                    ${arrivalTime} </br>
-                                    ${numOfStops}
-                                </p>
-                            </div>
-                            `;
-                    cardBodyDiv.appendChild(stepDiv);
-                    cardDiv.appendChild(cardBodyDiv);
-                }
-            navContent.appendChild(cardDiv);    
-        }
-
         try{
             for (let step of leg1.steps) {
                 turnByturn(step);
@@ -416,7 +404,7 @@ window.addEventListener("DOMContentLoaded", async function () {
         navigationLayer.addTo(map);
     })
 
-    //CLEAR NAVIGATION
+    //CLEAR NAVIGATION EVENT LISTENER
     document.querySelector("#btnClearNavigate").addEventListener("click", function () {
         navigationLayer.clearLayers();
         navContent.innerHTML = "";
@@ -424,9 +412,7 @@ window.addEventListener("DOMContentLoaded", async function () {
         document.querySelector("#endPoint").value = "";
     })
 
-
-    //add filter function on content cards
-
+    // FILTER HOTELS EVENT LISTENER
     document.querySelector("#hotels").addEventListener("click", function () {
         if (document.querySelector("#hotels").checked) {
             map.addLayer(hotelsLayer);
@@ -442,7 +428,7 @@ window.addEventListener("DOMContentLoaded", async function () {
             }
         }
     })
-
+    // FILTER MALLS EVENT LISTENER
     document.querySelector("#malls").addEventListener("click", function () {
         if (document.querySelector("#malls").checked) {
             map.addLayer(mallsLayer);
@@ -458,7 +444,7 @@ window.addEventListener("DOMContentLoaded", async function () {
             }
         }
     })
-
+    // FILTER RESTAURANTS EVENT LISTENER
     document.querySelector("#restaurants").addEventListener("click", function () {
         if (document.querySelector("#restaurants").checked) {
             map.addLayer(restaurantsLayer);
@@ -474,7 +460,7 @@ window.addEventListener("DOMContentLoaded", async function () {
             }
         }
     })
-
+    // FILTER ATTRACTIONS EVENT LISTENER
     document.querySelector("#attractions").addEventListener("click", function () {
         if (document.querySelector("#attractions").checked) {
             map.addLayer(attractionsLayer);

@@ -34,7 +34,7 @@ window.addEventListener("DOMContentLoaded", async function () {
         let marker = L.marker([myLat, myLng], { icon: userIcon });
         marker.addTo(geoLocateLayer)
             .bindPopup(`
-                    This is my location</br>
+                    My location</br>
                     <button class="btn btn-success" onclick="setStart(${myLat},${myLng}, 'My Location')">Set as Start</button>
                     <button class="btn btn-danger" onclick="setEnd(${myLat},${myLng}, 'My Location')">Set as End</button>
                     `);
@@ -78,16 +78,15 @@ window.addEventListener("DOMContentLoaded", async function () {
                         let marker = L.marker([myLat, myLng], { icon: userIcon });
                         marker.addTo(geoLocateLayer)
                             .bindPopup(`
-                                This is my location</br>
-                                <button class="btn btn-success" onclick="setStart(${myLat},${myLng})">Set as Start</button>
-                                <button class="btn btn-danger" onclick="setEnd(${myLat},${myLng})">Set as End</button>
+                                My location</br>
+                                <button class="btn btn-success" onclick="setStart(${myLat},${myLng}, 'My Location')">Set as Start</button>
+                                <button class="btn btn-danger" onclick="setEnd(${myLat},${myLng}, 'My Location')">Set as End</button>
                                 `);
                         marker.on('mouseover', function (e) {
                             marker.openPopup();
                         });
                         geoLocateLayer.addTo(map);
                         locations = await geoLocateSearch(query, myLat, myLng);
-
                     } else if (!nearMe.checked) {
                         locations = await searchActivity(query);
                     }
@@ -284,126 +283,131 @@ window.addEventListener("DOMContentLoaded", async function () {
 
         //function for turn by turn navigation
         function turnByturn(step){
-            let stepTravelMode = "";
-            let stepHtml = "";
-            let stepDist = "";
-            let stepTransit = "";
+                let stepTravelMode = "";
+                let stepHtml = "";
+                let stepDist = "";
+                let stepTransit = "";
 
-            let cardDiv = document.createElement("div");
-            cardDiv.className = "card";
-            let cardBodyDiv = document.createElement("div");
-            cardBodyDiv.className = "card-body";
+                let cardDiv = document.createElement("div");
+                cardDiv.className = "card";
+                let cardBodyDiv = document.createElement("div");
+                cardBodyDiv.className = "card-body";
 
-            if (step.travelMode == "WALKING") {
-                stepTravelMode = step.travelMode;
+                if (step.travelMode == "WALKING") {
+                    stepTravelMode = step.travelMode;
 
-                if (step.htmlInstructions) {
-                    stepHtml = step.htmlInstructions;
-                }
-                if (step.distance) {
-                    stepDist = step.distance;
-                }
-                if (step.transitDetail) {
-                    stepTransit = step.transitDetail;
-                }
-
-                let stepDiv = document.createElement("div");
-                stepDiv.innerHTML = `
-                    <h5>${stepTravelMode}</h5>
-                    <h6>${stepHtml}</h6>
-                    `;
-
-                for (substep of step.steps) {
-                    let substepTravelMode = "";
-                    let substepHtml = "";
-                    let substepManeuver = "";
-                    if (substep.travelMode) {
-                        substepTravelMode = substep.travelMode;
+                    if (step.htmlInstructions) {
+                        stepHtml = step.htmlInstructions;
                     }
-                    if (substep.htmlInstructions) {
-                        substepHtml = substep.htmlInstructions;
+                    if (step.distance) {
+                        stepDist = step.distance;
                     }
-                    if (substep.maneuver) {
-                        substepManeuver = substep.maneuver;
+                    if (step.transitDetail) {
+                        stepTransit = step.transitDetail;
                     }
 
-                    let substepDiv = document.createElement("div");
-                    substepDiv.className = "card-text";
-                    substepDiv.innerHTML = `
-                        <p>${substepTravelMode} </br>
-                        ${substepHtml} </br>
-                        ${substepManeuver}</p>    
-                        `;
-
-                    stepDiv.appendChild(substepDiv);
-                }
-                cardBodyDiv.appendChild(stepDiv);
-                cardDiv.appendChild(cardBodyDiv);
-
-            }
-
-            if (step.travelMode == "TRANSIT") {
-                stepTravelMode = step.travelMode;
-                let vehicleName = "";
-                let departureStop = "";
-                let departureTime = "";
-                let arrivalStop = "";
-                let arrivalTime = "";
-                let numOfStops = "";
-
-                if (step.htmlInstructions) {
-                    step.Html = step.htmlInstructions;
-                }
-                if (step.transitDetail.line.vehicle.name) {
-                    vehicleName = step.transitDetail.line.vehicle.name;
-                }
-                if (step.transitDetail.departureStop.name) {
-                    departureStop = step.transitDetail.departureStop.name;
-                }
-                if (step.transitDetail.departureTime) {
-                    departureTime = step.transitDetail.departureTime;
-                }
-                if (step.transitDetail.arrivalStop.name) {
-                    arrivalStop = step.transitDetail.arrivalStop.name;
-                }
-                if (step.transitDetail.arrivalTime) {
-                    arrivalTime = step.transitDetail.arrivalTime;
-                }
-                if (step.transitDetail.numOfStops) {
-                    numOfStops = step.transitDetail.numOfStops;
-                }
-
-                let stepDiv = document.createElement("div");
-                stepDiv.innerHTML = `
+                    let stepDiv = document.createElement("div");
+                    stepDiv.innerHTML = `
                         <h5>${stepTravelMode}</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">${stepHtml}</h6>
-                        <div class="card-text">
-                            <p>
-                                ${vehicleName} </br>
-                                ${departureStop} </br>
-                                ${departureTime} </br>
-                                ${arrivalStop} </br>
-                                ${arrivalTime} </br>
-                                ${numOfStops}
-                            </p>
-                        </div>
+                        <h6>${stepHtml}</h6>
                         `;
-                cardBodyDiv.appendChild(stepDiv);
-                cardDiv.appendChild(cardBodyDiv);
+
+                    for (substep of step.steps) {
+                        let substepTravelMode = "";
+                        let substepHtml = "";
+                        let substepManeuver = "";
+                        if (substep.travelMode) {
+                            substepTravelMode = substep.travelMode;
+                        }
+                        if (substep.htmlInstructions) {
+                            substepHtml = substep.htmlInstructions;
+                        }
+                        if (substep.maneuver) {
+                            substepManeuver = substep.maneuver;
+                        }
+
+                        let substepDiv = document.createElement("div");
+                        substepDiv.className = "card-text";
+                        substepDiv.innerHTML = `
+                            <p>${substepTravelMode} </br>
+                            ${substepHtml} </br>
+                            ${substepManeuver}</p>    
+                            `;
+
+                        stepDiv.appendChild(substepDiv);
+                    }
+                    cardBodyDiv.appendChild(stepDiv);
+                    cardDiv.appendChild(cardBodyDiv);
+
+                }
+
+                if (step.travelMode == "TRANSIT") {
+                    stepTravelMode = step.travelMode;
+                    let vehicleName = "";
+                    let departureStop = "";
+                    let departureTime = "";
+                    let arrivalStop = "";
+                    let arrivalTime = "";
+                    let numOfStops = "";
+
+                    if (step.htmlInstructions) {
+                        step.Html = step.htmlInstructions;
+                    }
+                    if (step.transitDetail.line.vehicle.name) {
+                        vehicleName = step.transitDetail.line.vehicle.name;
+                    }
+                    if (step.transitDetail.departureStop.name) {
+                        departureStop = step.transitDetail.departureStop.name;
+                    }
+                    if (step.transitDetail.departureTime) {
+                        departureTime = step.transitDetail.departureTime;
+                    }
+                    if (step.transitDetail.arrivalStop.name) {
+                        arrivalStop = step.transitDetail.arrivalStop.name;
+                    }
+                    if (step.transitDetail.arrivalTime) {
+                        arrivalTime = step.transitDetail.arrivalTime;
+                    }
+                    if (step.transitDetail.numOfStops) {
+                        numOfStops = step.transitDetail.numOfStops;
+                    }
+
+                    let stepDiv = document.createElement("div");
+                    stepDiv.innerHTML = `
+                            <h5>${stepTravelMode}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">${stepHtml}</h6>
+                            <div class="card-text">
+                                <p>
+                                    ${vehicleName} </br>
+                                    ${departureStop} </br>
+                                    ${departureTime} </br>
+                                    ${arrivalStop} </br>
+                                    ${arrivalTime} </br>
+                                    ${numOfStops}
+                                </p>
+                            </div>
+                            `;
+                    cardBodyDiv.appendChild(stepDiv);
+                    cardDiv.appendChild(cardBodyDiv);
+                }
+            navContent.appendChild(cardDiv);    
+        }
+
+        try{
+            for (let step of leg1.steps) {
+                turnByturn(step);
+            } 
+        } catch(e) {
+            console.log(e)
+        }
+
+        try{
+            for (let step of leg2.steps) {
+                turnByturn(step);
+                
             }
-            navContent.appendChild(cardDiv);
-
-        }
-
-
-        for (let step of leg1.steps) {
-            turnByturn(step);
-            
-        }
-
-        for (let step of leg2.steps) {
-            turnByturn(step);
-            
+        } catch (e) {
+            console.log(e)
         }
 
         //create overview polyline on map

@@ -25,10 +25,14 @@ var mallIcon = L.icon({
     iconSize: [40, 40],
 });
 
+var mallLogoUrl = "/images/shopping-description.png";
+
 var hotelIcon = L.icon({
     iconUrl: "images/hotel.png",
     iconSize: [40, 40],
 });
+
+var hotelLogoUrl = "/images/hotel-description.png"
 
 var userIcon = L.icon({
     iconUrl: "images/user.png",
@@ -38,12 +42,18 @@ var userIcon = L.icon({
 var restaurantIcon = L.icon({
     iconUrl: "images/restaurant.png",
     iconSize: [40,40],
-})
+});
+
+var restaurantLogoUrl = "/images/food-description.png";
 
 var attractionIcon = L.icon({
     iconUrl: "images/attraction.png",
     iconSize: [40,40],
-})
+});
+
+var attractionLogoUrl = "/images/attraction-description.png";
+
+
 
 
 // <a href="https://www.flaticon.com/free-icons/maps-and-location" title="maps-and-location icons">Maps-and-location icons created by adrianadam - Flaticon</a>

@@ -50,222 +50,254 @@ window.addEventListener("DOMContentLoaded", async function () {
     let mallsLayer = L.layerGroup();
     let restaurantsLayer = L.layerGroup();
     let attractionsLayer = L.layerGroup();
-    let searchContent = document.querySelector("#searchContent");
+    let searchCardContent = document.querySelector("#searchCardContent");
 
-    document.querySelector("#btnSearch").addEventListener("click", async function () {
-        //show search options content
-        let target = document.querySelector("#searchOptions").classList;
-        if (!target.contains("show")) {
-            target.add("show");
-        }
-
-        //turn off the noSearchResults div
-        document.querySelector("#noSearchResults").style.display = "none";
-
-        //do not reset the searchContent!
-        // searchContent.innerHTML = "";
-        let query = document.querySelector("#txtSearch").value;
-        let locations = "";
-        if (query) {
-            //see if near me check box is checked
-            let nearMe = document.querySelector("#checkNearMe");
-
-            if (nearMe.checked) {
-                map.setView([myLat, myLng], 14);
-                L.circle([myLat, myLng], { radius: 3000 }).addTo(geoLocateLayer);
-                let marker = L.marker([myLat, myLng], { icon: userIcon });
-                marker.addTo(geoLocateLayer)
-                    .bindPopup(`
-                        This is my location</br>
-                        <button class="btn btn-success" onclick="setStart(${myLat},${myLng})">Set as Start</button>
-                        <button class="btn btn-danger" onclick="setEnd(${myLat},${myLng})">Set as End</button>
-                        `);
-                marker.on('mouseover', function (e) {
-                    marker.openPopup();
-                });
-                geoLocateLayer.addTo(map);
-                locations = await geoLocateSearch(query, myLat, myLng);
-
-            } else if (!nearMe.checked) {
-                locations = await searchActivity(query);
-            }
-
-
-            console.log(locations);
-            for (let loc of locations.results) {
-                let lat = loc.geocodes.main.latitude;
-                let lng = loc.geocodes.main.longitude;
-                let locName = loc.name;
-
-                // //extract location details
-                let fsq_id = loc.fsq_id;
-                // console.log(fsq_id);
-                let detail = await activityDetails(fsq_id);
-                // console.log(detail);
-                //grab description
-                let description = "";
-                try {
-                    description = detail.description;
-                } catch (e) {
-                    console.log(e);
-                }
-                //grab photo
-                let photoUrl = "";
-                try {
-                    photoUrl = `${detail.photos[0].prefix}400x400${detail.photos[0].suffix}`;
-                } catch (e) {
-                    console.log(e);
-                }
-                //grab website
-                let websiteUrl = "";
-                try {
-                    websiteUrl = detail.website;
-                } catch (e) {
-                    console.log(e);
-                }
-                //grab hours
-                let openingHours = "";
-                try {
-                    openingHours = detail.hours.display;
-                } catch (e) {
-                    console.log(e);
+    document.querySelector("#txtSearch").addEventListener("keyup", function (event) {
+        if (event.key === "Enter") {
+            async function search() {
+                //show search options content
+                let target = document.querySelector("#searchOptions").classList;
+                if (!target.contains("show")) {
+                    target.add("show");
                 }
 
-                //create custom marker icons, add category details to content cards
-                //set marker type according to category. need to loop through object as some locations are assigned more than 1 category
-                let locationCategory = "";
-                let markerIcon = "";
-                for (let c of loc.categories) {
-                    // console.log(c)
-                    if (c.id == "17114") {
-                        markerIcon = mallIcon;
-                        locationCategory = "malls";
-                        break;
-                    } else if (c.id == "19014") {
-                        markerIcon = hotelIcon;
-                        locationCategory = "hotels";
-                        break;
-                    } else if (c.id == "13065"){
-                        markerIcon = restaurantIcon;
-                        locationCategory = "restaurants";
-                        break;
-                    } else if (c.id == "16007"){
-                        markerIcon = attractionIcon;
-                        locationCategory = "attractions";
-                        break;
-                    }
-                }
+                //turn off the noSearchResults div
+                document.querySelector("#noSearchResults").style.display = "none";
 
-                let divLocationId = "d" + fsq_id;
-                let locationId = "a" + fsq_id;
-                //add element to search content
-                let divElement = document.createElement("div");
-                divElement.innerHTML = `
-                <div id="${divLocationId}" class="card mt-3 ${locationCategory}" style="width: 100%;">
-                    <div class="card-body">
-                        <a data-bs-toggle="collapse" href="#${locationId}" role="button" aria-expanded="false" aria-controls="${locationId}">
-                        <h6 class="card-title">${locName}</h6>
-                        </a>
-                        <div id="${locationId}" class="collapse">
-                            <img src="${photoUrl}" style="width: 100%;">
-                            <p class="card-text descriptionFontSize">${description}</p></br>
-                        </div> 
-                        <img src="images/time.png" style="height:20px;">
-                        <p class="card-text descriptionFontSize" style="display:inline; margin-left:10px;">${openingHours}</p> </br>
-                        <img src="images/home.png" style="height:20px;">
-                        <p class="card-text descriptionFontSize" style="display:inline; margin-left:10px;">${loc.location.formatted_address}</p> <hr>
-                        <div id="logoLinks">
-                            <a href="${websiteUrl}"><img src="images/world.png" style="height:20px;"></a>
-                            <a href="#"><img src="images/phone.png" style="height:20px; margin-left: 10px;"></a>
-                        </div>
-                    </div>
-                </div>
-                `;
-                searchContent.appendChild(divElement);
+                //do not reset the searchContent!
+                // searchContent.innerHTML = "";
+                let query = document.querySelector("#txtSearch").value;
+                let locations = "";
+                if (query) {
+                    //see if near me check box is checked
+                    let nearMe = document.querySelector("#checkNearMe");
 
-
-
-                //add markers to map
-                let marker = L.marker([lat, lng], { icon: markerIcon });
-
-                for (let c of loc.categories) {
-                    if (c.id == "17114") {
-                        marker.addTo(mallsLayer)
+                    if (nearMe.checked) {
+                        map.setView([myLat, myLng], 14);
+                        L.circle([myLat, myLng], { radius: 3000 }).addTo(geoLocateLayer);
+                        let marker = L.marker([myLat, myLng], { icon: userIcon });
+                        marker.addTo(geoLocateLayer)
                             .bindPopup(`
-                                    ${locName}</br>
-                                    <button class="btn btn-success" onclick="setStart(${lat}, ${lng}, '${locName}')">Set as Start</button>
-                                    <button class="btn btn-danger" onclick="setEnd(${lat}, ${lng}, '${locName}')">Set as End</button>
-                                    `);
-                        break;
-                    } else if (c.id == "19014") {
-                        marker.addTo(hotelsLayer)
-                            .bindPopup(`
-                                    ${locName}</br>
-                                    <button class="btn btn-success" onclick="setStart(${lat}, ${lng}, '${locName}')">Set as Start</button>
-                                    <button class="btn btn-danger" onclick="setEnd(${lat}, ${lng}, '${locName}')">Set as End</button>
-                                    `);
-                        break;
-                    } else if (c.id == "13065") {
-                        marker.addTo(restaurantsLayer)
-                            .bindPopup(`
-                                ${locName}</br>
-                                <button class="btn btn-success" onclick="setStart(${lat}, ${lng}, '${locName}')">Set as Start</button>
-                                <button class="btn btn-danger" onclick="setEnd(${lat}, ${lng}, '${locName}')">Set as End</button>
+                                This is my location</br>
+                                <button class="btn btn-success" onclick="setStart(${myLat},${myLng})">Set as Start</button>
+                                <button class="btn btn-danger" onclick="setEnd(${myLat},${myLng})">Set as End</button>
                                 `);
-                        break;
-                    } else if (c.id == "16007"){
-                        marker.addTo(attractionsLayer)
-                            .bindPopup(`
-                            ${locName}</br>
-                            <button class="btn btn-success" onclick="setStart(${lat}, ${lng}, '${locName}')">Set as Start</button>
-                            <button class="btn btn-danger" onclick="setEnd(${lat}, ${lng}, '${locName}')">Set as End</button>
-                            `);
-                        break;
+                        marker.on('mouseover', function (e) {
+                            marker.openPopup();
+                        });
+                        geoLocateLayer.addTo(map);
+                        locations = await geoLocateSearch(query, myLat, myLng);
+
+                    } else if (!nearMe.checked) {
+                        locations = await searchActivity(query);
                     }
+
+
+                    console.log(locations);
+                    for (let loc of locations.results) {
+                        let lat = loc.geocodes.main.latitude;
+                        let lng = loc.geocodes.main.longitude;
+                        let locName = loc.name;
+
+                        // //extract location details
+                        let fsq_id = loc.fsq_id;
+                        // console.log(fsq_id);
+                        let detail = await activityDetails(fsq_id);
+                        // console.log(detail);
+                        //grab description
+                        let description = "";
+                        if (detail.description) {
+                            description = detail.description;
+                        }
+
+                        //grab photo
+                        let photoUrl = "";
+                        try {
+                            if (detail.photos[0].prefix) {
+                                photoUrl = `${detail.photos[0].prefix}400x400${detail.photos[0].suffix}`;
+                            }
+                        } catch (e) {
+                            console.log(e)
+                        }
+
+
+                        //grab website
+                        let websiteUrl = "";
+                        if (detail.website) {
+                            websiteUrl = detail.website;
+                        }
+
+                        //grab hours
+                        let openingHours = "";
+                        if (detail.hours.display) {
+                            openingHours = detail.hours.display;
+                        }
+
+                        //create custom marker icons, add category details to content cards
+                        //set marker type according to category. need to loop through object as some locations are assigned more than 1 category
+                        let locationCategory = "";
+                        let markerIcon = "";
+                        let descriptionIconUrl = "";
+
+                        for (let c of loc.categories) {
+                            // console.log(c)
+                            if (c.id == "17114") {
+                                markerIcon = mallIcon;
+                                locationCategory = "malls";
+                                descriptionIconUrl = mallLogoUrl;
+                                break;
+                            } else if (c.id == "19014") {
+                                markerIcon = hotelIcon;
+                                locationCategory = "hotels";
+                                descriptionIconUrl = hotelLogoUrl;
+                                break;
+                            } else if (c.id == "13065") {
+                                markerIcon = restaurantIcon;
+                                locationCategory = "restaurants";
+                                descriptionIconUrl = restaurantLogoUrl;
+                                break;
+                            } else if (c.id == "16007") {
+                                markerIcon = attractionIcon;
+                                locationCategory = "attractions";
+                                descriptionIconUrl = attractionLogoUrl;
+                                break;
+                            }
+                        }
+
+                        let divLocationId = "d" + fsq_id;
+                        let locationId = "a" + fsq_id;
+                        //add card element to search content
+                        let divElement = document.createElement("div");
+                        divElement.innerHTML = `
+                        <div id="${divLocationId}" class="card mt-3 ${locationCategory}" style="width: 100%;">
+                            <div class="card-body">
+                                <div class="container d-flex">
+                                    <img src="${descriptionIconUrl}" style="height:20px; margin-left: -12px; margin-right: 10px">
+                                    <a data-bs-toggle="collapse" href="#${locationId}" role="button" aria-expanded="false" aria-controls="${locationId}">
+                                    <h6 class="card-title">${locName}</h6>
+                                    </a>
+                                </div>
+                                <div id="${locationId}" class="collapse">
+                                    <img src="${photoUrl}" style="width: 100%;">
+                                    <p class="card-text descriptionFontSize">${description}</p>
+                                    <img src="images/time.png" style="height:20px;">
+                                    <p class="card-text descriptionFontSize" style="display:inline; margin-left:10px;">${openingHours}</p>
+                                </div> 
+                                <img src="images/home.png" style="height:20px;">
+                                <p class="card-text descriptionFontSize" style="display:inline; margin-left:10px;">${loc.location.formatted_address}</p>
+                                <hr>
+                                <div id="logoLinks">
+                                    <a href="${websiteUrl}"><img src="images/world.png" style="height:20px;"></a>
+                                    <a href="#"><img src="images/phone.png" style="height:20px; margin-left: 10px;"></a>
+                                </div>
+                            </div>
+                        </div>
+                        `;
+                        searchCardContent.appendChild(divElement);
+
+
+
+                        //add markers to map
+                        let marker = L.marker([lat, lng], { icon: markerIcon });
+
+                        for (let c of loc.categories) {
+                            if (c.id == "17114") {
+                                descriptionIconUrl = mallLogoUrl;
+                                marker.addTo(mallsLayer)
+                                    .bindPopup(`
+                                            <img src="${descriptionIconUrl}" style="height:20px; margin-right: 5px">
+                                            ${locName}</br>
+                                            <div class="container mt-2">
+                                                <button class="btn btn-success" onclick="setStart(${lat}, ${lng}, '${locName}')">Set as Start</button>
+                                                <button class="btn btn-danger" onclick="setEnd(${lat}, ${lng}, '${locName}')">Set as End</button>
+                                            </div>
+                                            `);
+                                break;
+                            } else if (c.id == "19014") {
+                                descriptionIconUrl = hotelLogoUrl;
+                                marker.addTo(hotelsLayer)
+                                    .bindPopup(`
+                                            <img src="${descriptionIconUrl}" style="height:20px; margin-right: 5px">
+                                            ${locName}</br>
+                                            <div class="container mt-2">
+                                                <button class="btn btn-success" onclick="setStart(${lat}, ${lng}, '${locName}')">Set as Start</button>
+                                                <button class="btn btn-danger" onclick="setEnd(${lat}, ${lng}, '${locName}')">Set as End</button>
+                                            </div>
+                                            `);
+                                break;
+                            } else if (c.id == "13065") {
+                                descriptionIconUrl = restaurantLogoUrl;
+                                marker.addTo(restaurantsLayer)
+                                    .bindPopup(`
+                                        <img src="${descriptionIconUrl}" style="height:20px; margin-right: 5px">
+                                        ${locName}</br>
+                                        <div class="container mt-2">
+                                            <button class="btn btn-success" onclick="setStart(${lat}, ${lng}, '${locName}')">Set as Start</button>
+                                            <button class="btn btn-danger" onclick="setEnd(${lat}, ${lng}, '${locName}')">Set as End</button>
+                                        </div>
+                                        `);
+                                break;
+                            } else if (c.id == "16007") {
+                                descriptionIconUrl = attractionLogoUrl;
+                                marker.addTo(attractionsLayer)
+                                    .bindPopup(`
+                                        <img src="${descriptionIconUrl}" style="height:20px; margin-right: 5px">
+                                        ${locName}</br>
+                                        <div class="container mt-2">
+                                            <button class="btn btn-success" onclick="setStart(${lat}, ${lng}, '${locName}')">Set as Start</button>
+                                            <button class="btn btn-danger" onclick="setEnd(${lat}, ${lng}, '${locName}')">Set as End</button>
+                                        </div>
+                                    `);
+                                break;
+                            }
+                        }
+
+                        //add marker mouserover functions
+                        marker.on('mouseover', function (e) {
+                            marker.openPopup();
+                            //scroll to content card
+                            // let element = document.querySelector(`#${divLocationId}`);
+                            // element.scrollIntoView({ behavior: "smooth", block: "nearest", inline:"start" });
+                        })
+                        // marker.on("mouseout", function(e){
+                        //     marker.closePopup();
+                        // })
+
+                        //add marker click functions
+                        marker.on("click", function (e) {
+                            // map.setView(marker.getLatLng(),17)
+                            // map.panTo(marker.getLatLng(), { animate: true });
+                            marker.openPopup();
+                            let element = document.querySelector(`#${divLocationId}`);
+                            element.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" });
+                        })
+
+                        //open marker popup when clicking content card
+                        document.querySelector(`#${divLocationId}`).addEventListener("mouseover", function (e) {
+                            map.panTo(marker.getLatLng(), { animate: true });
+                            // map.setView(marker.getLatLng(),17)
+                            marker.openPopup();
+                        })
+                    }
+                    // searchActivityLayer.addTo(map);
+                    mallsLayer.addTo(map);
+                    hotelsLayer.addTo(map);
+                    restaurantsLayer.addTo(map);
+                    attractionsLayer.addTo(map);
                 }
-
-                //add marker mouserover functions
-                marker.on('click', function (e) {
-                    marker.openPopup();
-                    //scroll to content card
-                    let element = document.querySelector(`#${divLocationId}`);
-                    element.scrollIntoView({ behavior: "smooth", block: "nearest", inline:"start" });
-                })
-                // marker.on("mouseout", function(e){
-                //     marker.closePopup();
-                // })
-
-                //add marker click functions
-                marker.on("click", function (e) {
-                    // map.setView(marker.getLatLng(),17)
-                    map.panTo(marker.getLatLng(), { animate: true });
-                })
-
-                //open marker popup when clicking content card
-                document.querySelector(`#${divLocationId}`).addEventListener("mouseover", function (e) {
-                    map.panTo(marker.getLatLng(), { animate: true });
-                    // map.setView(marker.getLatLng(),17)
-                    marker.openPopup();
-                })
-            }
-            // searchActivityLayer.addTo(map);
-            mallsLayer.addTo(map);
-            hotelsLayer.addTo(map);
-            restaurantsLayer.addTo(map);
-            attractionsLayer.addTo(map);
+            } search();
         }
     })
-
-
-
 
     //CLEAR SEARCH
     document.querySelector("#btnClearSearch").addEventListener("click", function () {
         // searchActivityLayer.clearLayers();
         mallsLayer.clearLayers();
         hotelsLayer.clearLayers();
+        restaurantsLayer.clearLayers();
+        attractionsLayer.clearLayers();
         geoLocateLayer.clearLayers();
-        document.querySelector("#searchContent").innerHTML = "";
+        searchCardContent.innerHTML = "";
         //turn on the noSearchResults div
         document.querySelector("#noSearchResults").style.display = "block";
         document.querySelector("#txtSearch").value = "";
@@ -519,7 +551,7 @@ window.addEventListener("DOMContentLoaded", async function () {
     //CLEAR NAVIGATION
     document.querySelector("#btnClearNavigate").addEventListener("click", function () {
         navigationLayer.clearLayers();
-        navContent.innerHTML= "";
+        navContent.innerHTML = "";
         document.querySelector("#startPoint").value = "";
         document.querySelector("#endPoint").value = "";
     })
@@ -531,7 +563,7 @@ window.addEventListener("DOMContentLoaded", async function () {
         "Hotels": hotelsLayer,
         "Malls": mallsLayer,
     }
-    L.control.layers(baseLayers, overlays).addTo(map);
+    // L.control.layers(baseLayers, overlays).addTo(map);
 
     //add filter function on content cards
 

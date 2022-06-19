@@ -133,11 +133,12 @@ window.addEventListener("DOMContentLoaded", async function () {
                             openingHours = detail.hours.display;
                         }
 
-                        //create custom marker icons, add category details to content cards
+                        //create custom marker icons
                         //set marker type according to category. need to loop through object as some locations are assigned more than 1 category
                         let locationCategory = "";
                         let markerIcon = "";
                         let descriptionIconUrl = "";
+                        let marker = L.marker([lat, lng]);
 
                         for (let c of loc.categories) {
                             // console.log(c)
@@ -145,25 +146,45 @@ window.addEventListener("DOMContentLoaded", async function () {
                                 markerIcon = mallIcon;
                                 locationCategory = "malls";
                                 descriptionIconUrl = mallLogoUrl;
+                                marker.setIcon(mallIcon).addTo(mallsLayer);
+                                
+                                
                                 break;
                             } else if (c.id == "19014") {
                                 markerIcon = hotelIcon;
                                 locationCategory = "hotels";
                                 descriptionIconUrl = hotelLogoUrl;
+                                marker.setIcon(hotelIcon).addTo(hotelsLayer);
+                                
                                 break;
                             } else if (c.id == "13065") {
                                 markerIcon = restaurantIcon;
                                 locationCategory = "restaurants";
                                 descriptionIconUrl = restaurantLogoUrl;
+                                marker.setIcon(restaurantIcon).addTo(restaurantsLayer);
+                                
                                 break;
                             } else if (c.id == "16007") {
                                 markerIcon = attractionIcon;
                                 locationCategory = "attractions";
                                 descriptionIconUrl = attractionLogoUrl;
+                                marker.setIcon(attractionIcon).addTo(attractionsLayer);
+                                
                                 break;
                             }
                         }
 
+                        marker.bindPopup(`
+                            <img src="${descriptionIconUrl}" style="height:20px; margin-right: 5px">
+                            ${locName}</br>
+                            <div class="container mt-2">
+                            <button class="btn btn-success" onclick="setStart(${lat}, ${lng}, '${locName}')">Set as Start</button>
+                            <button class="btn btn-danger" onclick="setEnd(${lat}, ${lng}, '${locName}')">Set as End</button>
+                            </div>
+                            `);        
+                        
+
+                        //create content cards
                         let divLocationId = "d" + fsq_id;
                         let locationId = "a" + fsq_id;
                         //add card element to search content
@@ -195,69 +216,10 @@ window.addEventListener("DOMContentLoaded", async function () {
                         `;
                         searchCardContent.appendChild(divElement);
 
-
-
-                        //add markers to map
-                        let marker = L.marker([lat, lng], { icon: markerIcon });
-
-                        for (let c of loc.categories) {
-                            if (c.id == "17114") {
-                                descriptionIconUrl = mallLogoUrl;
-                                marker.addTo(mallsLayer)
-                                    .bindPopup(`
-                                            <img src="${descriptionIconUrl}" style="height:20px; margin-right: 5px">
-                                            ${locName}</br>
-                                            <div class="container mt-2">
-                                                <button class="btn btn-success" onclick="setStart(${lat}, ${lng}, '${locName}')">Set as Start</button>
-                                                <button class="btn btn-danger" onclick="setEnd(${lat}, ${lng}, '${locName}')">Set as End</button>
-                                            </div>
-                                            `);
-                                break;
-                            } else if (c.id == "19014") {
-                                descriptionIconUrl = hotelLogoUrl;
-                                marker.addTo(hotelsLayer)
-                                    .bindPopup(`
-                                            <img src="${descriptionIconUrl}" style="height:20px; margin-right: 5px">
-                                            ${locName}</br>
-                                            <div class="container mt-2">
-                                                <button class="btn btn-success" onclick="setStart(${lat}, ${lng}, '${locName}')">Set as Start</button>
-                                                <button class="btn btn-danger" onclick="setEnd(${lat}, ${lng}, '${locName}')">Set as End</button>
-                                            </div>
-                                            `);
-                                break;
-                            } else if (c.id == "13065") {
-                                descriptionIconUrl = restaurantLogoUrl;
-                                marker.addTo(restaurantsLayer)
-                                    .bindPopup(`
-                                        <img src="${descriptionIconUrl}" style="height:20px; margin-right: 5px">
-                                        ${locName}</br>
-                                        <div class="container mt-2">
-                                            <button class="btn btn-success" onclick="setStart(${lat}, ${lng}, '${locName}')">Set as Start</button>
-                                            <button class="btn btn-danger" onclick="setEnd(${lat}, ${lng}, '${locName}')">Set as End</button>
-                                        </div>
-                                        `);
-                                break;
-                            } else if (c.id == "16007") {
-                                descriptionIconUrl = attractionLogoUrl;
-                                marker.addTo(attractionsLayer)
-                                    .bindPopup(`
-                                        <img src="${descriptionIconUrl}" style="height:20px; margin-right: 5px">
-                                        ${locName}</br>
-                                        <div class="container mt-2">
-                                            <button class="btn btn-success" onclick="setStart(${lat}, ${lng}, '${locName}')">Set as Start</button>
-                                            <button class="btn btn-danger" onclick="setEnd(${lat}, ${lng}, '${locName}')">Set as End</button>
-                                        </div>
-                                    `);
-                                break;
-                            }
-                        }
-
                         //add marker mouserover functions
                         marker.on('mouseover', function (e) {
                             marker.openPopup();
-                            //scroll to content card
-                            // let element = document.querySelector(`#${divLocationId}`);
-                            // element.scrollIntoView({ behavior: "smooth", block: "nearest", inline:"start" });
+                           
                         })
                         // marker.on("mouseout", function(e){
                         //     marker.closePopup();
@@ -320,7 +282,8 @@ window.addEventListener("DOMContentLoaded", async function () {
         let leg1 = navigateRoute.data.routes[0].legs[0];
         let leg2 = navigateRoute.data.routes[0].legs[4];
 
-        for (let step of leg1.steps) {
+        //function for turn by turn navigation
+        function turnByturn(step){
             let stepTravelMode = "";
             let stepHtml = "";
             let stepDist = "";
@@ -429,117 +392,18 @@ window.addEventListener("DOMContentLoaded", async function () {
                 cardDiv.appendChild(cardBodyDiv);
             }
             navContent.appendChild(cardDiv);
+
+        }
+
+
+        for (let step of leg1.steps) {
+            turnByturn(step);
+            
         }
 
         for (let step of leg2.steps) {
-            let stepTravelMode = "";
-            let stepHtml = "";
-            let stepDist = "";
-            let stepTransit = "";
-
-            let cardDiv = document.createElement("div");
-            cardDiv.className = "card";
-            let cardBodyDiv = document.createElement("div");
-            cardBodyDiv.className = "card-body";
-
-            if (step.travelMode == "WALKING") {
-                stepTravelMode = step.travelMode;
-
-                if (step.htmlInstructions) {
-                    stepHtml = step.htmlInstructions;
-                }
-                if (step.distance) {
-                    stepDist = step.distance;
-                }
-                if (step.transitDetail) {
-                    stepTransit = step.transitDetail;
-                }
-
-                let stepDiv = document.createElement("div");
-                stepDiv.innerHTML = `
-                    <h5>${stepTravelMode}</h5>
-                    <h6>${stepHtml}</h6>
-                    `;
-
-                for (substep of step.steps) {
-                    let substepTravelMode = "";
-                    let substepHtml = "";
-                    let substepManeuver = "";
-                    if (substep.travelMode) {
-                        substepTravelMode = substep.travelMode;
-                    }
-                    if (substep.htmlInstructions) {
-                        substepHtml = substep.htmlInstructions;
-                    }
-                    if (substep.maneuver) {
-                        substepManeuver = substep.maneuver;
-                    }
-
-                    let substepDiv = document.createElement("div");
-                    substepDiv.className = "card-text";
-                    substepDiv.innerHTML = `
-                        <p>${substepTravelMode} </br>
-                        ${substepHtml} </br>
-                        ${substepManeuver}</p>    
-                        `;
-
-                    stepDiv.appendChild(substepDiv);
-                }
-                cardBodyDiv.appendChild(stepDiv);
-                cardDiv.appendChild(cardBodyDiv);
-
-            }
-
-            if (step.travelMode == "TRANSIT") {
-                stepTravelMode = step.travelMode;
-                let vehicleName = "";
-                let departureStop = "";
-                let departureTime = "";
-                let arrivalStop = "";
-                let arrivalTime = "";
-                let numOfStops = "";
-
-                if (step.htmlInstructions) {
-                    step.Html = step.htmlInstructions;
-                }
-                if (step.transitDetail.line.vehicle.name) {
-                    vehicleName = step.transitDetail.line.vehicle.name;
-                }
-                if (step.transitDetail.departureStop.name) {
-                    departureStop = step.transitDetail.departureStop.name;
-                }
-                if (step.transitDetail.departureTime) {
-                    departureTime = step.transitDetail.departureTime;
-                }
-                if (step.transitDetail.arrivalStop.name) {
-                    arrivalStop = step.transitDetail.arrivalStop.name;
-                }
-                if (step.transitDetail.arrivalTime) {
-                    arrivalTime = step.transitDetail.arrivalTime;
-                }
-                if (step.transitDetail.numOfStops) {
-                    numOfStops = step.transitDetail.numOfStops;
-                }
-
-                let stepDiv = document.createElement("div");
-                stepDiv.innerHTML = `
-                        <h5>${stepTravelMode}</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">${stepHtml}</h6>
-                        <div class="card-text">
-                            <p>
-                                ${vehicleName} </br>
-                                ${departureStop} </br>
-                                ${departureTime} </br>
-                                ${arrivalStop} </br>
-                                ${arrivalTime} </br>
-                                ${numOfStops}
-                            </p>
-                        </div>
-                        `;
-                cardBodyDiv.appendChild(stepDiv);
-                cardDiv.appendChild(cardBodyDiv);
-            }
-            navContent.appendChild(cardDiv);
+            turnByturn(step);
+            
         }
 
         //create overview polyline on map
@@ -556,14 +420,6 @@ window.addEventListener("DOMContentLoaded", async function () {
         document.querySelector("#endPoint").value = "";
     })
 
-    let baseLayers = {
-        "Navigation": navigationLayer
-    };
-    let overlays = {
-        "Hotels": hotelsLayer,
-        "Malls": mallsLayer,
-    }
-    // L.control.layers(baseLayers, overlays).addTo(map);
 
     //add filter function on content cards
 

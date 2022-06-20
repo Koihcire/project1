@@ -149,13 +149,16 @@
                     <!-- feedback content -->
                     <div class="tab-pane fade" id="feedback" role="tabpanel" aria-labelledby="feedback-tab">
                         <p>Reach out to us to improve our services!</p>
-                        <input type="text" class="form-control form-control-sm mt-3" id="name"
+                        <input type="text" class="form-control form-control-sm mt-3" id="feedbackName"
                             placeholder="Enter Your Name">
-                        <input type="text" class="form-control form-control-sm mt-3" id="email"
+                        <p id="nameError"></p>
+                        <input type="text" class="form-control form-control-sm mt-3" id="feedbackEmail"
                             placeholder="Valid Email Address (name@email.com)">
+                        <p id="emailError"></p>
                         <textarea class="form-control form-control-sm mt-3" id="feedbackContent"
                             placeholder="Please provide your feedback"></textarea>
-                        <button class="btn btn-sm btn-primary mt-3" id="submit">Submit</button>
+                        <p id="contentError"></p>
+                        <button class="btn btn-sm btn-primary mt-3" id="feedbackSubmit">Submit</button>
                     </div>
                 </div>
             </div>
@@ -166,6 +169,17 @@
             </div>
         </div>
         <div id="map"></div>
+    </div>
+
+    <!-- modal -->
+    <div id="feedbackSuccessModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h4>Thank you for your feedback!</h4></br>
+            <h6>Name: </h5><p id="confirmationName"></p>
+            <h6>Email: </h5><p id="confirmationEmail"></p>
+            <h6>Feedback: </h5><p id="confirmationContent"></p>
+        </div>
     </div>
 
 
@@ -194,6 +208,8 @@
         crossorigin="anonymous"></script>
     <!-- utilities js -->
     <script src="js/utilities.js"></script>
+    <!-- form validation js -->
+    <script src="js/form-validation.js"></script>
     <!-- my js   -->
     <script src="js/script.js"></script>
 </body>

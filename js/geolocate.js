@@ -14,7 +14,7 @@ function successCallback(pos) {
 }
 //function for errorcall back argument
 function errorCallback() {
-    alert("wrong");
+    console.log("callback error");
 }
 navigator.geolocation.getCurrentPosition(successCallback, errorCallback, geoOps);
 // create function for geolocate marker creation

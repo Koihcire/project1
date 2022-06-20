@@ -208,7 +208,11 @@ window.addEventListener("DOMContentLoaded", async function () {
         restaurantsLayer.clearLayers();
         attractionsLayer.clearLayers();
         geoLocateLayer.clearLayers();
+        navigationLayer.clearLayers()
         document.querySelector("#searchCardContent").innerHTML = "";
+        document.querySelector("#navContent").innerHTML = "";
+        document.querySelector("#startPoint").value = "";
+        document.querySelector("#endPoint").value = "";
         //turn on the noSearchResults div
         document.querySelector("#noSearchResults").style.display = "block";
         document.querySelector("#txtSearch").value = "";

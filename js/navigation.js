@@ -42,7 +42,7 @@ function turnByturn(step){
     let stepTransit = "";
 
     let cardDiv = document.createElement("div");
-    cardDiv.className = "card";
+    cardDiv.className = "card mt-3";
     let cardBodyDiv = document.createElement("div");
     cardBodyDiv.className = "card-body";
 
@@ -61,8 +61,10 @@ function turnByturn(step){
 
         let stepDiv = document.createElement("div");
         stepDiv.innerHTML = `
-            <h5>${stepTravelMode}</h5>
-            <h6>${stepHtml}</h6>
+            <div>
+            <img src="images/walking.png" style="height: 20px; display:inline;">
+            <h6 style="display:inline">${stepHtml}</h6>
+            </div>
             `;
 
         for (substep of step.steps) {
@@ -80,11 +82,9 @@ function turnByturn(step){
             }
 
             let substepDiv = document.createElement("div");
-            substepDiv.className = "card-text";
+            substepDiv.className = "card-text mt-3 descriptionFontSize";
             substepDiv.innerHTML = `
-                <p>${substepTravelMode} </br>
                 ${substepHtml} </br>
-                ${substepManeuver}</p>    
                 `;
 
             stepDiv.appendChild(substepDiv);
@@ -102,9 +102,12 @@ function turnByturn(step){
         let arrivalStop = "";
         let arrivalTime = "";
         let numOfStops = "";
-
+        let headsign = "";
+        let lineName = "";
+        let vehicleIconUrl = "";
+        
         if (step.htmlInstructions) {
-            step.Html = step.htmlInstructions;
+            stepHtml = step.htmlInstructions;
         }
         if (step.transitDetail.line.vehicle.name) {
             vehicleName = step.transitDetail.line.vehicle.name;
@@ -124,19 +127,32 @@ function turnByturn(step){
         if (step.transitDetail.numOfStops) {
             numOfStops = step.transitDetail.numOfStops;
         }
+        if (step.transitDetail.headsign) {
+            headsign = step.transitDetail.headsign;
+        }
+        if (step.transitDetail.line.name){
+            lineName = step.transitDetail.line.name;
+        }
+
+        if (vehicleName == "Bus"){
+            vehicleIconUrl = "images/bus.png";
+        } else if (vehicleName == "Subway"){
+            vehicleIconUrl = "images/train.png";
+        };
 
         let stepDiv = document.createElement("div");
         stepDiv.innerHTML = `
-                <h5>${stepTravelMode}</h5>
-                <h6 class="card-subtitle mb-2 text-muted">${stepHtml}</h6>
-                <div class="card-text">
+                <div>
+                <img src="${vehicleIconUrl}" style="height: 20px; display: inline;">
+                <h6 style="display:inline; margin-left: 10px">${stepHtml}</h6>
+                </div>
+                <div class="card-text descriptionFontSize" style="margin-top: 10px;">
                     <p>
-                        ${vehicleName} </br>
-                        ${departureStop} </br>
-                        ${departureTime} </br>
-                        ${arrivalStop} </br>
-                        ${arrivalTime} </br>
-                        ${numOfStops}
+                        Take <b>${vehicleName} ${lineName}</b> (${headsign})</br>
+                        </br>
+                        from <b>${departureStop}</b> at <b>${departureTime}</b></br>
+                        </br>
+                        alight at <b>${arrivalStop}</b> after <b>${numOfStops}</b> stops
                     </p>
                 </div>
                 `;

@@ -106,7 +106,8 @@ window.addEventListener("DOMContentLoaded", async function () {
                                 marker.setIcon(hotelIcon).addTo(hotelsLayer);
                                 
                                 break;
-                            } else if (c.id == "13065") {
+                            } else if (c.id == "13034" || c.id == "13035" || c.id == "13340" || c.id == "13145" || c.id == "13099" || c.id == "13299" || c.id == "13199") {
+                                // 13034 cafe, 13035 coffeeshop, 13340 singapore restaurant, 13145 fastfood, 13099 chinese, 13299 malay, 13199 indian
                                 markerIcon = restaurantIcon;
                                 locationCategory = "restaurants";
                                 descriptionIconUrl = restaurantLogoUrl;
@@ -170,10 +171,7 @@ window.addEventListener("DOMContentLoaded", async function () {
                             marker.openPopup();
                            
                         })
-                        // marker.on("mouseout", function(e){
-                        //     marker.closePopup();
-                        // })
-
+                        
                         //add marker click functions
                         marker.on("click", function (e) {
                             // map.setView(marker.getLatLng(),17)

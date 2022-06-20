@@ -24,6 +24,11 @@ function setStart(lat,lng,locName){
     let start = document.querySelector("#startPoint");
     start.data = lat + "," + lng;
     start.value = locName;
+    //show search options content
+    let target = document.querySelector("#searchOptions").classList;
+    if (!target.contains("show")) {
+        target.add("show");
+    }
     //open the navigation pane
     let navTarget = document.querySelector("#navigate-tab");
     let tab = new bootstrap.Tab(navTarget);
@@ -34,6 +39,11 @@ function setEnd(lat,lng,locName){
     let end = document.querySelector("#endPoint");
     end.data = lat + "," + lng;
     end.value = locName;
+    //show search options content
+    let target = document.querySelector("#searchOptions").classList;
+    if (!target.contains("show")) {
+        target.add("show");
+    }
     //open the navigation pane
     let navTarget = document.querySelector("#navigate-tab");
     let tab = new bootstrap.Tab(navTarget);

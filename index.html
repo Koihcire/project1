@@ -46,25 +46,25 @@
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                         <li>
-                            <div class="form-check form-check-inline ms-3 form-control-sm">
+                            <div class="form-check form-check-inline ms-3 form-control-sm form-switch">
                                 <input type="checkbox" class="form-check-input" name="filter" id="hotels" checked>
                                 <label for="hotels" class="form-check-label">Hotels</label>
                             </div>
                         </li>
                         <li>
-                            <div class="form-check form-check-inline ms-3 form-control-sm">
+                            <div class="form-check form-check-inline ms-3 form-control-sm form-switch">
                                 <input type="checkbox" class="form-check-input" name="filter" id="malls" checked>
                                 <label for="malls" class="form-check-label">Malls</label>
                             </div>
                         </li>
                         <li>
-                            <div class="form-check form-check-inline ms-3 form-control-sm">
+                            <div class="form-check form-check-inline ms-3 form-control-sm form-switch">
                                 <input type="checkbox" class="form-check-input" name="filter" id="restaurants" checked>
                                 <label for="restaurants" class="form-check-label">Restaurants</label>
                             </div>
                         </li>
                         <li>
-                            <div class="form-check form-check-inline ms-3 form-control-sm">
+                            <div class="form-check form-check-inline ms-3 form-control-sm form-switch">
                                 <input type="checkbox" class="form-check-input" name="filter" id="attractions" checked>
                                 <label for="attractions" class="form-check-label">Attractions</label>
                             </div>
@@ -81,23 +81,10 @@
                 <!-- </div> -->
             </div>
 
-
-            <!-- <div id="searchBar-container" class="container row g-1">
-                <input type="text" id="txtSearch" placeholder="search for shopping malls"
-                    class="form-control form-control-sm mt-3 col-auto" style="width:57%" />
-                <button id="btnSearch" class="btn btn-primary btn-sm col-auto mt-3 ms-1"
-                    style="width:20%;">
-                    <img src="images/search.png" class="interfaceIcon">
-                </button>
-                <button id="btnClearSearch" class="btn btn-danger btn-sm col-auto mt-3 ms-1"
-                    style="width:20%">
-                    <img src="images/trash.png" class="interfaceIcon">
-                </button>
-            </div> -->
             <!-- check box for near me -->
-            <div class="form-check">
+            <div class="form-check form-switch">
                 <input type="checkbox" class="form-check-input" id="checkNearMe">
-                <label class="form-check-label" for="checkNearMe">Near Me</label>
+                <label class="form-check-label" for="checkNearMe"><p class="descriptionFontSize">Near Me</p></label>
             </div>
 
             <!-- SEARCH OPTIONS -->
@@ -108,17 +95,17 @@
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" id="searchContent-tab" data-bs-toggle="tab"
                             data-bs-target="#searchContent" type="button" role="tab " aria-controls="searchContent"
-                            aria-selected="true">Search</button>
+                            aria-selected="true"><p class="descriptionFontSize">Search</p></button>
                     </li>
                     <!-- Navigate Tab -->
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="navigate-tab" data-bs-toggle="tab" data-bs-target="#navigate"
-                            type="button" role="tab" aria-controls="navigate" aria-selected="false">Navigate</button>
+                            type="button" role="tab" aria-controls="navigate" aria-selected="false"><p class="descriptionFontSize">Navigate</p></button>
                     </li>
                     <!-- Feedback tab -->
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="feedback-tab" data-bs-toggle="tab" data-bs-target="#feedback"
-                            type="button" role="tab" aria-controls="feedback" aria-selected="false">Feedback</button>
+                            type="button" role="tab" aria-controls="feedback" aria-selected="false"><p class="descriptionFontSize">Feedback</p></button>
                     </li>
                 </ul>
 
@@ -130,7 +117,7 @@
                         <div style="display:inline-flex">
                             <!-- no search results placeholder -->
                             <div id="noSearchResults">
-                                <p class="text-muted">no search results</p>
+                                <p class="text-muted descriptionFontSize">no search results</p>
                             </div>
                         </div>
                         <!-- search card content box -->

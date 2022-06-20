@@ -24,14 +24,20 @@ function setStart(lat,lng,locName){
     let start = document.querySelector("#startPoint");
     start.data = lat + "," + lng;
     start.value = locName;
-    // return c;
+    //open the navigation pane
+    let navTarget = document.querySelector("#navigate-tab");
+    let tab = new bootstrap.Tab(navTarget);
+    tab.show();
 }
 //SETEND FUNCTION
 function setEnd(lat,lng,locName){
     let end = document.querySelector("#endPoint");
     end.data = lat + "," + lng;
     end.value = locName;
-    // return c;
+    //open the navigation pane
+    let navTarget = document.querySelector("#navigate-tab");
+    let tab = new bootstrap.Tab(navTarget);
+    tab.show();
 }
 
 //TURNBYTURN FUNCTION

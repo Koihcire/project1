@@ -28,6 +28,16 @@ let restaurantsLayer = L.layerGroup();
 let attractionsLayer = L.layerGroup();
 
 //SET UP ICONS
+var startIcon = L.icon({
+    iconUrl: "images/circle.png",
+    iconSize: [20,20]
+})
+
+var endIcon = L.icon({
+    iconUrl: "images/end.png",
+    iconSize: [20,20]
+})
+
 var mallIcon = L.icon({
     iconUrl: "images/mall.png",
     iconSize: [40, 40],

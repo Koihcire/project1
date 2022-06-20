@@ -31,6 +31,7 @@ html{
     /* adjust padding for height*/
     padding-top: 3px;
     height: 30px;
+    width: 123px;
 }
 
 .feedbackError {

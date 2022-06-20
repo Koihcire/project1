@@ -177,6 +177,14 @@ window.addEventListener("DOMContentLoaded", async function () {
                             // map.setView(marker.getLatLng(),17)
                             // map.panTo(marker.getLatLng(), { animate: true });
                             marker.openPopup();
+                            
+                            //show search options content
+                            let target = document.querySelector("#searchOptions").classList;
+                            if (!target.contains("show")) {
+                                target.add("show");
+                            }
+
+                            //scroll to card
                             let element = document.querySelector(`#${divLocationId}`);
                             element.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" });
                         })

@@ -14,13 +14,17 @@ window.addEventListener("DOMContentLoaded", async function () {
     //SEARCH EVENT LISTENER (trigger on enter)
     document.querySelector("#txtSearch").addEventListener("keyup", async function (event) {
         if (event.key === "Enter") {
-            search();
+            if (document.querySelector("#txtSearch").value){
+                search();
+            }
         }
     });
 
     // SEARCH EVENT LISTENER (trigger on search button)
     document.querySelector("#searchBtn").addEventListener("click", async function(){
-        search();
+        if (document.querySelector("#txtSearch").value){
+            search();
+        }
     })
 
     //CLEAR SEARCH EVENT LISTENER

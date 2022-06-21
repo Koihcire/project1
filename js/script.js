@@ -13,7 +13,7 @@ window.addEventListener("DOMContentLoaded", async function () {
     });
 
     //SEARCH EVENT LISTENER (trigger on enter)
-    document.querySelector("#txtSearch").addEventListener("keyup", function (event) {
+    document.querySelector("#txtSearch").addEventListener("keyup", async function (event) {
         if (event.key === "Enter") {
             async function search() {
 
@@ -232,6 +232,10 @@ window.addEventListener("DOMContentLoaded", async function () {
                 }
             } search();
         }
+    // SEARCH EVENT LISTENER (trigger on search button)
+    document.querySelector("#searchBtn").addEventListener("click", async function(){
+        search();
+    })
     });
 
     //CLEAR SEARCH EVENT LISTENER

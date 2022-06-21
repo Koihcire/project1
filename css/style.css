@@ -10,10 +10,22 @@ html {
     height: 100vh;
 }
 
-.searchBoxIcon {
+.logoIcon {
     border: 1px solid red;
     height: 30px;
     padding: 2px;
+}
+
+.filterIcon {
+    height: 25px;
+    border: 1px solid red;
+    margin-top: -2px;
+}
+
+.searchBtnIcon {
+    border: 1px solid red;
+    height: 22px;
+    margin-top: -10px;
 }
 
 .headerFontSize {
@@ -129,6 +141,7 @@ html {
         display: flex;
         border-radius: 10px 10px 10px 10px;
         height: 33px;
+        
     }
 
     .nav-tabs>li>button {

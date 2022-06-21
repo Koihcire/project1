@@ -9,13 +9,17 @@ window.addEventListener("DOMContentLoaded", async function () {
     document.querySelector("#geolocate").addEventListener("click", async function () {
         map.setView([myLat, myLng], 17);
         // create geolocate marker
-        geolocateMarker(myLat, myLng, geoLocateLayer,map);
+        geolocateMarker(myLat, myLng, geoLocateLayer, map);
     });
 
     //SEARCH EVENT LISTENER (trigger on enter)
     document.querySelector("#txtSearch").addEventListener("keyup", function (event) {
         if (event.key === "Enter") {
             async function search() {
+
+                //show loading div
+                document.querySelector("#loading").style.display = "block";
+
                 //show search options content
                 let target = document.querySelector("#searchOptions").classList;
                 if (!target.contains("show")) {
@@ -40,7 +44,7 @@ window.addEventListener("DOMContentLoaded", async function () {
                         map.setView([myLat, myLng], 14);
                         L.circle([myLat, myLng], { radius: 3000 }).addTo(geoLocateLayer);
                         // create geolocate marker
-                        geolocateMarker(myLat, myLng, geoLocateLayer,map)
+                        geolocateMarker(myLat, myLng, geoLocateLayer, map)
                         //pull locations data with added gelocate ll
                         locations = await geoLocateSearch(query, myLat, myLng);
                     } else if (!nearMe.checked) {
@@ -100,15 +104,15 @@ window.addEventListener("DOMContentLoaded", async function () {
                                 locationCategory = "malls";
                                 descriptionIconUrl = mallLogoUrl;
                                 marker.setIcon(mallIcon).addTo(mallsLayer);
-                                
-                                
+
+
                                 break;
                             } else if (c.id == "19014") {
                                 markerIcon = hotelIcon;
                                 locationCategory = "hotels";
                                 descriptionIconUrl = hotelLogoUrl;
                                 marker.setIcon(hotelIcon).addTo(hotelsLayer);
-                                
+
                                 break;
                             } else if (c.id == "13034" || c.id == "13035" || c.id == "13340" || c.id == "13145" || c.id == "13099" || c.id == "13299" || c.id == "13199") {
                                 // 13034 cafe, 13035 coffeeshop, 13340 singapore restaurant, 13145 fastfood, 13099 chinese, 13299 malay, 13199 indian
@@ -116,14 +120,14 @@ window.addEventListener("DOMContentLoaded", async function () {
                                 locationCategory = "restaurants";
                                 descriptionIconUrl = restaurantLogoUrl;
                                 marker.setIcon(restaurantIcon).addTo(restaurantsLayer);
-                                
+
                                 break;
                             } else if (c.id == "16007") {
                                 markerIcon = attractionIcon;
                                 locationCategory = "attractions";
                                 descriptionIconUrl = attractionLogoUrl;
                                 marker.setIcon(attractionIcon).addTo(attractionsLayer);
-                                
+
                                 break;
                             }
                         }
@@ -143,8 +147,8 @@ window.addEventListener("DOMContentLoaded", async function () {
                                     <button class="btn btn-sm btn-danger" onclick="setEnd(${lat}, ${lng}, '${locName}')">Set End</button>
                                 </div>
                             </div>
-                            `);        
-                        
+                            `);
+
 
                         //create content cards
                         let divLocationId = "d" + fsq_id;
@@ -181,15 +185,15 @@ window.addEventListener("DOMContentLoaded", async function () {
                         //add marker mouserover functions
                         marker.on('mouseover', function (e) {
                             marker.openPopup();
-                           
+
                         })
-                        
+
                         //add marker click functions
                         marker.on("click", function (e) {
                             // map.setView(marker.getLatLng(),17)
                             // map.panTo(marker.getLatLng(), { animate: true });
                             marker.openPopup();
-                            
+
                             //show search options content
                             let target = document.querySelector("#searchOptions").classList;
                             if (!target.contains("show")) {
@@ -213,6 +217,9 @@ window.addEventListener("DOMContentLoaded", async function () {
                     hotelsLayer.addTo(map);
                     restaurantsLayer.addTo(map);
                     attractionsLayer.addTo(map);
+
+                    //remove loading div
+                    document.querySelector("#loading").style.display = "none";
                 }
             } search();
         }
@@ -230,7 +237,9 @@ window.addEventListener("DOMContentLoaded", async function () {
         document.querySelector("#searchCardContent").innerHTML = "";
         document.querySelector("#navContent").innerHTML = "";
         document.querySelector("#startPoint").value = "";
+        document.querySelector("#startPoint").data = "";
         document.querySelector("#endPoint").value = "";
+        document.querySelector("#endPoint").data = "";
         //turn on the noSearchResults div
         document.querySelector("#noSearchResults").style.display = "block";
         document.querySelector("#txtSearch").value = "";
@@ -239,52 +248,61 @@ window.addEventListener("DOMContentLoaded", async function () {
     //NAVIGATION EVENT LISTENER
     document.querySelector("#btnNavigate").addEventListener("click", async function () {
         //check if input
-        if (!document.querySelector("#startPoint").data){
+        if (!document.querySelector("#startPoint").data) {
             document.querySelector("#startPoint").classList.add("feedbackError");
             document.querySelector("#startPoint").value = "Please select start point";
         }
-        if (!document.querySelector("#endPoint").data){
+        if (!document.querySelector("#endPoint").data) {
             document.querySelector("#endPoint").classList.add("feedbackError");
             document.querySelector("#endPoint").value = "Please select end point";
         }
 
-        let origin = document.querySelector("#startPoint").data;
-        let destination = document.querySelector("#endPoint").data;
-        navigationLayer.clearLayers();
-        // console.log("origin :" + origin + "destination : " + destination);
-        let navigateRoute = await navigate(origin, destination);
-        console.log(navigateRoute);
+        if (document.querySelector("#startPoint").data && document.querySelector("#endPoint").data) {
+            //show loading div
+            document.querySelector("#loading").style.display = "block";
 
-        //create markers
-        let originCoords = origin.split(",");
-        let destinationCoords = destination.split(",");
-        let startMarker = L.marker([originCoords[0], originCoords[1]], {icon: startIcon}).addTo(navigationLayer);
-        let endMarker = L.marker([destinationCoords[0], destinationCoords[1]], {icon: endIcon}).addTo(navigationLayer);
+            let origin = document.querySelector("#startPoint").data;
+            let destination = document.querySelector("#endPoint").data;
+            navigationLayer.clearLayers();
+            // console.log("origin :" + origin + "destination : " + destination);
+            let navigateRoute = await navigate(origin, destination);
+            console.log(navigateRoute);
 
-        //create turn by turn cards on navigation content
-        let leg1 = navigateRoute.data.routes[0].legs[0];
-        let leg2 = navigateRoute.data.routes[0].legs[4];
-        try{
-            for (let step of leg1.steps) {
-                turnByturn(step);
-            } 
-        } catch(e) {
-            console.log(e)
-        }
+            //create markers
+            let originCoords = origin.split(",");
+            let destinationCoords = destination.split(",");
+            let startMarker = L.marker([originCoords[0], originCoords[1]], { icon: startIcon }).addTo(navigationLayer);
+            let endMarker = L.marker([destinationCoords[0], destinationCoords[1]], { icon: endIcon }).addTo(navigationLayer);
 
-        try{
-            for (let step of leg2.steps) {
-                turnByturn(step);
-                
+            //create turn by turn cards on navigation content
+            let leg1 = navigateRoute.data.routes[0].legs[0];
+            let leg2 = navigateRoute.data.routes[0].legs[4];
+            try {
+                for (let step of leg1.steps) {
+                    turnByturn(step);
+                }
+            } catch (e) {
+                console.log(e)
             }
-        } catch (e) {
-            console.log(e)
+
+            try {
+                for (let step of leg2.steps) {
+                    turnByturn(step);
+
+                }
+            } catch (e) {
+                console.log(e)
+            }
+
+            //create overview polyline on map
+            let encoded = navigateRoute.data.routes[0].overview_polyline.points;
+            let polyline = L.Polyline.fromEncoded(encoded).addTo(navigationLayer);
+            navigationLayer.addTo(map);
+
+            //remove loading div
+            document.querySelector("#loading").style.display = "none";
         }
 
-        //create overview polyline on map
-        let encoded = navigateRoute.data.routes[0].overview_polyline.points;
-        let polyline = L.Polyline.fromEncoded(encoded).addTo(navigationLayer);
-        navigationLayer.addTo(map);
     });
 
     //CLEAR NAVIGATION EVENT LISTENER
@@ -292,24 +310,26 @@ window.addEventListener("DOMContentLoaded", async function () {
         navigationLayer.clearLayers();
         document.querySelector("#navContent").innerHTML = "";
         document.querySelector("#startPoint").value = "";
+        document.querySelector("#startPoint").data = "";
         document.querySelector("#endPoint").value = "";
+        document.querySelector("#endPoint").data = "";
     });
 
     //FILTERS CHECKBOXES EVENT LISTENERS
     //hotels layer
-    document.querySelector("#hotels").addEventListener("click", function(){
+    document.querySelector("#hotels").addEventListener("click", function () {
         filter("#hotels", ".hotels", hotelsLayer);
     });
     //malls layer
-    document.querySelector("#malls").addEventListener("click", function(){
+    document.querySelector("#malls").addEventListener("click", function () {
         filter("#malls", ".malls", mallsLayer);
     });
     //restaurants layer
-    document.querySelector("#restaurants").addEventListener("click", function(){
+    document.querySelector("#restaurants").addEventListener("click", function () {
         filter("#restaurants", ".restaurants", restaurantsLayer);
     });
     //attractions layer
-    document.querySelector("#attractions").addEventListener("click", function(){
+    document.querySelector("#attractions").addEventListener("click", function () {
         filter("#attractions", ".attractions", attractionsLayer);
     });
 

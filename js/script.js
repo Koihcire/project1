@@ -107,14 +107,16 @@ window.addEventListener("DOMContentLoaded", async function () {
 
 
                                 break;
-                            } else if (c.id == "19014") {
+                            } 
+                            if (c.id == "19014") {
                                 markerIcon = hotelIcon;
                                 locationCategory = "hotels";
                                 descriptionIconUrl = hotelLogoUrl;
                                 marker.setIcon(hotelIcon).addTo(hotelsLayer);
 
                                 break;
-                            } else if (c.id == "13034" || c.id == "13035" || c.id == "13340" || c.id == "13145" || c.id == "13099" || c.id == "13299" || c.id == "13199") {
+                            }
+                            if (c.id == "13034" || c.id == "13035" || c.id == "13340" || c.id == "13145" || c.id == "13099" || c.id == "13299" || c.id == "13199") {
                                 // 13034 cafe, 13035 coffeeshop, 13340 singapore restaurant, 13145 fastfood, 13099 chinese, 13299 malay, 13199 indian
                                 markerIcon = restaurantIcon;
                                 locationCategory = "restaurants";
@@ -122,13 +124,20 @@ window.addEventListener("DOMContentLoaded", async function () {
                                 marker.setIcon(restaurantIcon).addTo(restaurantsLayer);
 
                                 break;
-                            } else if (c.id == "16007") {
+                            }
+                            if (c.id == "16007") {
                                 markerIcon = attractionIcon;
                                 locationCategory = "attractions";
                                 descriptionIconUrl = attractionLogoUrl;
                                 marker.setIcon(attractionIcon).addTo(attractionsLayer);
 
                                 break;
+                                // create anomaly case for uncategorized food options
+                            } else {
+                                markerIcon = restaurantIcon;
+                                locationCategory = "restaurants";
+                                descriptionIconUrl = restaurantLogoUrl;
+                                marker.setIcon(restaurantIcon).addTo(restaurantsLayer);
                             }
                         }
 

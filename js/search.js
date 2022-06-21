@@ -36,7 +36,6 @@ async function search() {
         }
         console.log(locations);
 
-
         // EXTRACT CORE DATA FROM FOURSQUARE API
         for (let loc of locations.results) {
             let lat = loc.geocodes.main.latitude;
@@ -79,6 +78,8 @@ async function search() {
             let markerIcon = "";
             let descriptionIconUrl = "";
             let marker = L.marker([lat, lng]);
+
+           
 
             for (let c of loc.categories) {
                 // console.log(c)
@@ -198,13 +199,15 @@ async function search() {
             })
 
             //open marker popup when clicking content card
-            document.querySelector(`#${divLocationId}`).addEventListener("mouseover", function (e) {
-                map.panTo(marker.getLatLng(), { animate: true });
+            document.querySelector(`#${divLocationId}`).addEventListener("click", function (e) {
+            // document.querySelector(`#${divLocationId}`).addEventListener("click", function(){
+                // map.panTo(marker.getLatLng(), { animate: true });
+                map.flyTo(marker.getLatLng(), 17)
                 // map.setView(marker.getLatLng(),17)
                 marker.openPopup();
             })
         }
-        // searchActivityLayer.addTo(map);
+
         mallsLayer.addTo(map);
         hotelsLayer.addTo(map);
         restaurantsLayer.addTo(map);

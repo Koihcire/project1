@@ -28,6 +28,11 @@ html {
     margin-top: -10px;
 }
 
+.btn-color {
+    background-color: #2277b2;
+    color: white;
+}
+
 .headerFontSize {
     font-size: medium;
 }

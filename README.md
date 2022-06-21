@@ -1,4 +1,4 @@
-<h1>SG Xplore</h1>
+<h1>Explore SG</h1>
 <hr>
 <!-- holding picture of different layouts -->
 The live demo of the website can be accessed <a href="https://stupendous-donut-1d1c52.netlify.app/">here</a>
@@ -8,27 +8,45 @@ The live demo of the website can be accessed <a href="https://stupendous-donut-1
 <hr>
 
 <h3>1.1 Project Context</h3>
+<p>As the tourism industry is anticipating a influx of foreign visitors following the relaxation of covid measures. Foreign visitors are eager to explore both the iconic landmarks, shopping and food that Singapore has to offer. Many rely on word of mouth and social media to research for the most authentic spots to visit.</p>
 
-<h3>1.2 Target Audience</h3>
+<h3>1.2 Organisation Goals</h3>
+<p>Explore SG is a map application that aims to help foreign visitors to search for the most popular shopping, food and landmarks to visit in Singapore, and provide navigation directions by public transport.
 
-<h3>1.3 Organisation Goals</h3>
-
-<h3>1.4 User Goals</h3>
-
+<h3>1.3 Target Audience</h3>
+<p>Foreign visitors who want to explore popular shopping, food and landmarks by public transport.
 
 <h2>2. UIUX</h2>
 <hr>
 
 <h3>2.1 Strategy</h3>
 <h4>2.1.1 Organisation Objective</h4>
+<p>
 <h4>2.1.2 User Stories</h4>
-needs and pain points 
-features
+User Story: 
+User is a tourist on a free and easy package, spending around 3 to 5 days in Singapore.
+Th
 
 <h3>2.2 Scope</h3>
 <h4>2.2.1 Features</h4>
+<ol>
+    <li>Allow the user to search for locations, organised according to different categories (shopping malls, restaurants, hotels, attractions)</li>
+    <li>Search can either be for the whole of Singapore, or limited to 3km radius around the user's current position</li>
+    <li>User should be able to filter the returned results according to which category is of interest to them</li>
+    <li>User should be able to access key information (photo, opening hours, address, website) about each location</li>
+    <li>User should be able to set a location as a start or end point, and generate a navigation route and instructions to reach there by public transport</li>
+</ol>
+
 <h4>2.2.2 Content</h4>
+Content for the website will be pulled from the following sources:
+<ul>
+    <li>Foursquare (location details, photos, opening hours, address, website)</li>
+    <li>Singapore Tourism Board (navigation route, turn by turn instructions)</li>
+    <li>OpenStreetMap (map body)</li>
+</ul>
+
 <h4>2.2.3 Non-functional Requirements</h4>
+The website should be designed with a mobile first template, and should be mobile responsive to be used for phones, tablets and laptops.
 
 <h3>2.3 Structure</h3>
 insert site map

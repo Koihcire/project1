@@ -10,8 +10,10 @@ html{
     height: 100vh;
 }
 
-#search-container {
-    max-height: 100vh;
+.searchBoxIcon {
+    border: 1px solid red;
+    height: 30px;
+    padding: 2px;
 }
 
 .headerFontSize {
@@ -95,4 +97,63 @@ html{
     cursor: pointer;
   }
 
+@media screen and (max-width: 576px) {
+    #search-container {
+        max-height: 100vh;
+        position: absolute;
+        z-index: 314159;
+        width: 100%;
+        background-color: rgba(255,255,255,0.8);
+        /* background-color: red; */
+        /* margin: 5px; */
+    }
+    
+    #searchBar{
+        border:1px solid pink;
+        margin-top: 10px;
+        display: flex;
+        border-radius: 50px 50px 50px 50px;
+        padding: 5px;
+        height: 47px;
+    }
+    
+    #searchBox {
+        border: 1px solid blue;
+        background-color: aquamarine;
+        width: 400px;
+        display: flex;
+        border-radius: 10px 10px 10px 10px;
+        height: 33px;
+    }
+}
+  
+@media screen and (min-width: 576px){
+    #search-container {
+        max-height: 100vh;
+        position: absolute;
+        z-index: 314159;
+        width: 450px;
+        background-color: rgba(255,255,255,0.8);
+        margin: 10px;
+        border-radius: 5px 5px 5px 5px;
+    }
+    
+    #searchBar{
+        border:1px solid pink;
+        margin-top: 10px;
+        display: flex;
+        border-radius: 50px 50px 50px 50px;
+        padding: 5px;
+        height: 47px;
+    }
+    
+    #searchBox {
+        border: 1px solid blue;
+        background-color: aquamarine;
+        width: 400px;
+        display: flex;
+        border-radius: 10px 10px 10px 10px;
+        height: 33px;
+    }
+}
   

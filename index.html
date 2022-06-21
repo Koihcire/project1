@@ -22,20 +22,17 @@
 <body>
 
     <div id="map-container" style="position:relative; overflow: hidden;">
-        <div id="search-container" class="container rounded-3 m-2"
-            style="position: absolute; z-index: 314159; width:450px; background-color: rgba(255,255,255,0.8); margin:5px;">
+        <div id="search-container" class="container">
             <!-- SEARCH BAR -->
-            <div id="searchBar"
-                style="border: 1px solid pink; margin-top: 10px; display:flex; border-radius: 50px 50px 50px 50px; padding: 5px; height: 47px;">
+            <div id="searchBar">
                 <!-- searchbox -->
-                <div id="searchBox"
-                    style="border: 1px solid blue; background-color:aquamarine; width:400px; display: flex; border-radius: 10px 10px 10px 10px; height: 33px;">
-                    <img src="images/twitter.png"
-                        style="border: 1px solid red; height: 30px; padding:2px; margin-right: 3px;">
+                <div id="searchBox">
+                    <img src="images/twitter.png" class="searchBoxIcon"
+                        style="margin-right: 3px;">
                     <input type="text" id="txtSearch" placeholder="search SGXplore "
                         class="form-control form-control-sm" style="border: white;">
-                    <img src="images/search.png"
-                        style="border:1px solid red; height:30px; padding:2px; margin-left: 3px;">
+                    <img src="images/search.png" class="searchBoxIcon"
+                        style="margin-left: 3px;">
                     <!-- Filter search dropdown -->
                     <div class="dropdown container" style="display:inline; max-width: min-content;">
                         <button class="btn btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1"

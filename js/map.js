@@ -5,7 +5,7 @@ function createMap(lat, lng) {
     });
     //set the center point of the map
     map.setView([lat, lng], 12)
-    map.zoomControl.setPosition('topright')
+    map.zoomControl.setPosition('bottomright')
 
     //set up the tile layer
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {

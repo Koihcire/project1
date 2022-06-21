@@ -22,19 +22,11 @@ function createMap(lat, lng) {
 //INITIALISE LAYERS
 let navigationLayer = L.layerGroup();
 let geoLocateLayer = L.layerGroup();
-// let hotelsLayer = L.layerGroup();
-// let mallsLayer = L.layerGroup();
-// let restaurantsLayer = L.layerGroup();
-// let attractionsLayer = L.layerGroup();
-// let hotelsLayer = L.markerClusterGroup();
-// let mallsLayer = L.markerClusterGroup();
-// let restaurantsLayer = L.markerClusterGroup();
-// let attractionsLayer = L.markerClusterGroup();
-// let markerCluster = L.markerClusterGroup();
-let hotelsLayer = L.markerClusterGroup.layerSupport();
-        let mallsLayer = L.markerClusterGroup.layerSupport();
-        let restaurantsLayer = L.markerClusterGroup.layerSupport();
-        let attractionsLayer = L.markerClusterGroup.layerSupport();
+
+let hotelsLayer = L.markerClusterGroup.layerSupport({disableClusteringAtZoom:13});
+let mallsLayer = L.markerClusterGroup.layerSupport({disableClusteringAtZoom:13});
+let restaurantsLayer = L.markerClusterGroup.layerSupport({disableClusteringAtZoom:13});
+let attractionsLayer = L.markerClusterGroup.layerSupport({disableClusteringAtZoom:13});
 
 //SET UP ICONS
 var startIcon = L.icon({

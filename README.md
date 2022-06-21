@@ -57,8 +57,12 @@ The website should be designed with a mobile first template, and should be mobil
 
 <h3>2.5 Surface</h3>
 <h4>2.5.1 Colors</h4>
-<img src="readme-inserts/colorScheme.png" style="width:50%;">
+<img src="readme-inserts/color-scheme.png" style="width:50%;">
+<p> The above color scheme was chosen as blue and orange tones convey vibrancy and warmth, resembling the sunshine and clear skies. This makes it suitable for a tourism related use case.
+
 <h4>2.5.2 Fonts</h4>
+<p>A sans serif font with a small font size was chosen to create the an uncluttered, minimalist look and feel to enhance the user experience on the website</p>
+
 <h4>2.5.3 Icons and Markers</h4>
 
 
@@ -70,7 +74,7 @@ table of features
 
 <h2>4. Test Cases</h2>
 <hr>
-The test list can be accessed <a href="">here</a>.
+The test list can be accessed <a href="https://1drv.ms/x/s!ArFMW1hSgH5_gacFMFkKcplOkPmMzw?e=MIYanj">here</a>.
 
 
 <h2>5. Deployment</h2>

@@ -48,14 +48,16 @@ Content for the website will be pulled from the following sources:
 <h4>2.2.3 Non-functional Requirements</h4>
 The website should be designed with a mobile first template, and should be mobile responsive to be used for phones, tablets and laptops.
 
-<h3>2.3 Structure</h3>
-insert site map
+<h3>2.3 Site Interaction Architecture</h3>
+<img src="readme-inserts/interaction-architecture.png" style="width:50%;">
 
 <h3>2.4 Skeleton</h3>
-insert wireframe
+<img src="readme-inserts/wireframe1.png" style="width:50%;"></br>
+<img src="readme-inserts/wireframe2.png" style="width:50%;">
 
 <h3>2.5 Surface</h3>
 <h4>2.5.1 Colors</h4>
+<img src="readme-inserts/colorScheme.png" style="width:50%;">
 <h4>2.5.2 Fonts</h4>
 <h4>2.5.3 Icons and Markers</h4>
 

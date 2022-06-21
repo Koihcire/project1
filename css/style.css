@@ -44,7 +44,7 @@ html {
 
 
 .feedbackError {
-    border: 2px solid red;
+    border: 1px solid red;
 }
 
 .errorTxt {
@@ -134,7 +134,7 @@ html {
         /* adjust padding for height*/
         padding-top: 3px;
         height: 30px;
-        width: auto;
+        width: 100px;
     }
 }
 

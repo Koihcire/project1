@@ -45,6 +45,7 @@ window.addEventListener("DOMContentLoaded", async function () {
                     }
                     console.log(locations);
 
+
                     // EXTRACT CORE DATA FROM FOURSQUARE API
                     for (let loc of locations.results) {
                         let lat = loc.geocodes.main.latitude;
@@ -233,6 +234,16 @@ window.addEventListener("DOMContentLoaded", async function () {
 
     //NAVIGATION EVENT LISTENER
     document.querySelector("#btnNavigate").addEventListener("click", async function () {
+        //check if input
+        if (!document.querySelector("#startPoint").data){
+            document.querySelector("#startPoint").classList.add("feedbackError");
+            document.querySelector("#startPoint").value = "Please select start point";
+        }
+        if (!document.querySelector("#endPoint").data){
+            document.querySelector("#endPoint").classList.add("feedbackError");
+            document.querySelector("#endPoint").value = "Please select end point";
+        }
+
         let origin = document.querySelector("#startPoint").data;
         let destination = document.querySelector("#endPoint").data;
         navigationLayer.clearLayers();

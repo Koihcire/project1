@@ -24,6 +24,9 @@ function setStart(lat,lng,locName){
     let start = document.querySelector("#startPoint");
     start.data = lat + "," + lng;
     start.value = locName;
+    if(start.classList.contains("feedbackError")){
+        start.classList.remove("feedbackError")
+    }
     //show search options content
     let target = document.querySelector("#searchOptions").classList;
     if (!target.contains("show")) {
@@ -39,6 +42,9 @@ function setEnd(lat,lng,locName){
     let end = document.querySelector("#endPoint");
     end.data = lat + "," + lng;
     end.value = locName;
+    if(end.classList.contains("feedbackError")){
+        end.classList.remove("feedbackError")
+    }
     //show search options content
     let target = document.querySelector("#searchOptions").classList;
     if (!target.contains("show")) {

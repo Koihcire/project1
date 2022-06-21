@@ -21,6 +21,10 @@ window.addEventListener("DOMContentLoaded", async function () {
                 if (!target.contains("show")) {
                     target.add("show");
                 }
+                //open the search tab
+                let searchContentTab = document.querySelector("#searchContent-tab");
+                let tab = new bootstrap.Tab(searchContentTab);
+                tab.show();
 
                 //turn off the noSearchResults div
                 document.querySelector("#noSearchResults").style.display = "none";

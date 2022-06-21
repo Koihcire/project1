@@ -25,63 +25,65 @@
         <div id="search-container" class="container rounded-3 m-2"
             style="position: absolute; z-index: 314159; width:450px; background-color: rgba(255,255,255,0.8); margin:5px;">
             <!-- SEARCH BAR -->
-            <div class="searchBar container d-flex justify-content-end" class="container d-flex rounded-3" style="border: 1px solid pink; margin-top: 10px;">
-                <!-- <div class="container d-flex"> -->
+            <div id="searchBar"
+                style="border: 1px solid pink; margin-top: 10px; display:flex; border-radius: 50px 50px 50px 50px; padding: 5px; height: 47px;">
                 <!-- searchbox -->
-                <div class="search container d-flex rounded-3"
-                    style="border: 1px solid blue; background-color:aquamarine; width:400px;">
-                    <img src="images/twitter.png" class="interfaceIcon" style="border: 1px solid red">
-                    <input type="text" id="txtSearch" placeholder="search SGXplore" class="form-control form-control-sm"
-                        style="border: white">
-                    <!-- <button id="btnSearch" class="btn btn-primary btn-sm">
-                                <img src="images/search.png" class="interfaceIcon">
-                            </button> -->
-                    <img src="images/search.png" class="interfaceIcon" style="border:1px solid red">
-                </div>
-                <!-- Filter search dropdown -->
-                <div class="dropdown container" style="display:inline; max-width: min-content;">
-                    <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="images/settings-sliders.png" class="interfaceIcon">
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li>
-                            <div class="form-check form-check-inline ms-3 form-control-sm form-switch">
-                                <input type="checkbox" class="form-check-input" name="filter" id="hotels" checked>
-                                <label for="hotels" class="form-check-label">Hotels</label>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="form-check form-check-inline ms-3 form-control-sm form-switch">
-                                <input type="checkbox" class="form-check-input" name="filter" id="malls" checked>
-                                <label for="malls" class="form-check-label">Malls</label>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="form-check form-check-inline ms-3 form-control-sm form-switch">
-                                <input type="checkbox" class="form-check-input" name="filter" id="restaurants" checked>
-                                <label for="restaurants" class="form-check-label">Restaurants</label>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="form-check form-check-inline ms-3 form-control-sm form-switch">
-                                <input type="checkbox" class="form-check-input" name="filter" id="attractions" checked>
-                                <label for="attractions" class="form-check-label">Attractions</label>
-                            </div>
-                        </li>
-                    </ul>
+                <div id="searchBox"
+                    style="border: 1px solid blue; background-color:aquamarine; width:400px; display: flex; border-radius: 10px 10px 10px 10px; height: 33px;">
+                    <img src="images/twitter.png"
+                        style="border: 1px solid red; height: 30px; padding:2px; margin-right: 3px;">
+                    <input type="text" id="txtSearch" placeholder="search SGXplore "
+                        class="form-control form-control-sm" style="border: white;">
+                    <img src="images/search.png"
+                        style="border:1px solid red; height:30px; padding:2px; margin-left: 3px;">
+                    <!-- Filter search dropdown -->
+                    <div class="dropdown container" style="display:inline; max-width: min-content;">
+                        <button class="btn btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="images/settings-sliders.png" class="interfaceIcon">
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li>
+                                <div class="form-check form-check-inline ms-3 form-control-sm form-switch">
+                                    <input type="checkbox" class="form-check-input" name="filter" id="hotels" checked>
+                                    <label for="hotels" class="form-check-label">Hotels</label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="form-check form-check-inline ms-3 form-control-sm form-switch">
+                                    <input type="checkbox" class="form-check-input" name="filter" id="malls" checked>
+                                    <label for="malls" class="form-check-label">Malls</label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="form-check form-check-inline ms-3 form-control-sm form-switch">
+                                    <input type="checkbox" class="form-check-input" name="filter" id="restaurants"
+                                        checked>
+                                    <label for="restaurants" class="form-check-label">Restaurants</label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="form-check form-check-inline ms-3 form-control-sm form-switch">
+                                    <input type="checkbox" class="form-check-input" name="filter" id="attractions"
+                                        checked>
+                                    <label for="attractions" class="form-check-label">Attractions</label>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
                 <!-- clear search -->
-                <!-- <div class="container" style="display:inline; max-width: min-content; margin-right: -10px;"> -->
-                    <button id="btnClearSearch" class="btn btn-danger btn-sm">
-                        <img src="images/trash.png" class="interfaceIcon">
-                    </button>
-            </div>
+                <button id="btnClearSearch" class="btn btn-sm">
+                    <img src="images/trash.png" style="height:25px; ">
+                </button>
+            </div> 
 
             <!-- check box for near me -->
             <div class="form-check form-switch mt-1 container ms-3">
                 <input type="checkbox" class="form-check-input" id="checkNearMe">
-                <label class="form-check-label" for="checkNearMe" style="height: 20px"><p class="descriptionFontSize">Near Me</p></label>
+                <label class="form-check-label" for="checkNearMe" style="height: 20px">
+                    <p class="descriptionFontSize">Near Me</p>
+                </label>
             </div>
 
             <!-- SEARCH OPTIONS -->
@@ -92,17 +94,23 @@
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" id="searchContent-tab" data-bs-toggle="tab"
                             data-bs-target="#searchContent" type="button" role="tab " aria-controls="searchContent"
-                            aria-selected="true"><p class="descriptionFontSize"><b>Search</b></p></button>
+                            aria-selected="true">
+                            <p class="headerFontSize"><b>Search</b></p>
+                        </button>
                     </li>
                     <!-- Navigate Tab -->
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="navigate-tab" data-bs-toggle="tab" data-bs-target="#navigate"
-                            type="button" role="tab" aria-controls="navigate" aria-selected="false"><p class="descriptionFontSize"><b>Navigate</b></p></button>
+                            type="button" role="tab" aria-controls="navigate" aria-selected="false">
+                            <p class="headerFontSize"><b>Navigate</b></p>
+                        </button>
                     </li>
                     <!-- Feedback tab -->
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="feedback-tab" data-bs-toggle="tab" data-bs-target="#feedback"
-                            type="button" role="tab" aria-controls="feedback" aria-selected="false"><p class="descriptionFontSize"><b>Feedback</b></p></button>
+                            type="button" role="tab" aria-controls="feedback" aria-selected="false">
+                            <p class="headerFontSize"><b>Feedback</b></p>
+                        </button>
                     </li>
                 </ul>
 
@@ -136,7 +144,6 @@
                             <button id="btnNavigate" class="btn btn-primary btn-sm">Navigate</button>
                             <button id="btnClearNavigate" class="btn btn-danger btn-sm">Clear Route</button>
                             <button id="geolocate" class="btn btn-primary btn-sm">Locate</button>
-                            <!-- <div id="navContent"></div> -->
                             <div class="tab-pane fade show active" id="navContent" role="tabpanel"
                                 aria-labelledby="navContent-tab"
                                 style="max-height: 57vh; overflow: scroll; width: 100%;">
@@ -173,9 +180,12 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <h4>Thank you for your feedback!</h4></br>
-            <h6>Name: </h5><p id="confirmationName"></p>
-            <h6>Email: </h5><p id="confirmationEmail"></p>
-            <h6>Feedback: </h5><p id="confirmationContent"></p>
+            <h6>Name: </h5>
+                <p id="confirmationName"></p>
+                <h6>Email: </h5>
+                    <p id="confirmationEmail"></p>
+                    <h6>Feedback: </h5>
+                        <p id="confirmationContent"></p>
         </div>
     </div>
 
@@ -214,6 +224,3 @@
 </html>
 
 <img src="images/" alt="">
-
-
-

@@ -26,7 +26,6 @@ window.addEventListener("DOMContentLoaded", async function () {
                 document.querySelector("#noSearchResults").style.display = "none";
 
                 //do not reset the searchContent!
-                // searchContent.innerHTML = "";
                 let query = document.querySelector("#txtSearch").value;
                 let locations = "";
                 if (query) {

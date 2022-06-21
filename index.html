@@ -132,7 +132,7 @@
                     <div class="tab-pane fade" id="navigate" role="tabpanel" aria-labelledby="navigate-tab">
                         <div class="container">
                             <img src="images/circle.png" alt="">
-                            <input type="text" id="startPoint" class="form-control form-control-sm mt-3 d-inline ms-3"
+                            <input type="text" id="startPoint" class="form-control form-control-sm mt-2 d-inline ms-3"
                                 style="width: 85%;" placeholder="Set Start Point" disabled />
                         </div>
                         <div class="container">
@@ -140,15 +140,16 @@
                             <input type="text" id="endPoint" class="form-control form-control-sm mt-1 d-inline ms-3"
                                 style="width: 85%;" placeholder="Set End Point" disabled />
                         </div>
-                        <div class="container mt-3">
-                            <button id="btnNavigate" class="btn btn-primary btn-sm">Navigate</button>
-                            <button id="btnClearNavigate" class="btn btn-danger btn-sm">Clear Route</button>
-                            <button id="geolocate" class="btn btn-primary btn-sm">Locate</button>
+                        <div class="container mt-2 d-flex justify-content-center">
+                            <button id="btnNavigate" class="btn btn-primary btn-sm">Go!</button>
+                            <button id="btnClearNavigate" class="btn btn-danger btn-sm ms-2 me-2">Clear Route</button>
+                            <button id="geolocate" class="btn btn-primary btn-sm">Find Me</button>
+                        </div>
                             <div class="tab-pane fade show active" id="navContent" role="tabpanel"
                                 aria-labelledby="navContent-tab"
                                 style="max-height: 57vh; overflow: scroll; width: 100%;">
                             </div>
-                        </div>
+                        
                     </div>
                     <!-- feedback content -->
                     <div class="tab-pane fade" id="feedback" role="tabpanel" aria-labelledby="feedback-tab">

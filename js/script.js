@@ -124,11 +124,19 @@ window.addEventListener("DOMContentLoaded", async function () {
                         }
 
                         marker.bindPopup(`
-                            <img src="${descriptionIconUrl}" style="height:20px; margin-right: 5px">
-                            ${locName}</br>
-                            <div class="container mt-2">
-                            <button class="btn btn-success" onclick="setStart(${lat}, ${lng}, '${locName}')">Set as Start</button>
-                            <button class="btn btn-danger" onclick="setEnd(${lat}, ${lng}, '${locName}')">Set as End</button>
+                            <div class="container">
+                                <div class="container d-flex">
+                                    <div>
+                                    <img src="${descriptionIconUrl}" style="height:30px; margin-top: 2px; margin-right:5px;">
+                                    </div>
+                                    <div style="height: 30px;">
+                                    <p style="font-size: 15px; margin-top: 5px;">${locName}</p>
+                                    </div>
+                                </div>
+                                <div class="container mt-2 ">
+                                    <button class="btn btn-sm btn-success" onclick="setStart(${lat}, ${lng}, '${locName}')">Set Start</button>
+                                    <button class="btn btn-sm btn-danger" onclick="setEnd(${lat}, ${lng}, '${locName}')">Set End</button>
+                                </div>
                             </div>
                             `);        
                         

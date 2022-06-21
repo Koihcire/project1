@@ -45,6 +45,7 @@ html {
 
 .feedbackError {
     border: 1px solid red;
+    color: red;
 }
 
 .errorTxt {

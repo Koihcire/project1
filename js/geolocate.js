@@ -23,8 +23,8 @@ function geolocateMarker(myLat, myLng, geoLocateLayer,map){
     marker.addTo(geoLocateLayer)
         .bindPopup(`
                 My location</br>
-                <button class="btn btn-success" onclick="setStart(${myLat},${myLng}, 'My Location')">Set as Start</button>
-                <button class="btn btn-danger" onclick="setEnd(${myLat},${myLng}, 'My Location')">Set as End</button>
+                <button class="btn btn-color-marker" onclick="setStart(${myLat},${myLng}, 'My Location')">Set as Start</button>
+                <button class="btn btn-color-marker" onclick="setEnd(${myLat},${myLng}, 'My Location')">Set as End</button>
                 `);
     marker.on('mouseover', function (e) {
         marker.openPopup();

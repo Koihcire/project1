@@ -135,8 +135,8 @@ async function search() {
                         </div>
                     </div>
                     <div class="container mt-2 ">
-                        <button class="btn btn-sm btn-success" onclick="setStart(${lat}, ${lng}, '${locName}')">Set Start</button>
-                        <button class="btn btn-sm btn-danger" onclick="setEnd(${lat}, ${lng}, '${locName}')">Set End</button>
+                        <button class="btn btn-sm btn-color-marker" onclick="setStart(${lat}, ${lng}, '${locName}')">Set Start</button>
+                        <button class="btn btn-sm btn-color-marker" onclick="setEnd(${lat}, ${lng}, '${locName}')">Set End</button>
                     </div>
                 </div>
                 `);

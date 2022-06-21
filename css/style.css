@@ -11,21 +11,26 @@ html {
 }
 
 .logoIcon {
-    border: 1px solid red;
+    /* border: 1px solid red; */
     height: 30px;
     padding: 2px;
 }
 
 .filterIcon {
     height: 25px;
-    border: 1px solid red;
+    /* border: 1px solid red; */
     margin-top: -2px;
 }
 
 .searchBtnIcon {
-    border: 1px solid red;
+    /* border: 1px solid red; */
     height: 22px;
     margin-top: -10px;
+}
+
+.btn-color-marker {
+    background-color: #d78b2e;
+    color: white;
 }
 
 .btn-color {
@@ -57,8 +62,6 @@ html {
 .interfaceIcon {
     height: 20px;
 }
-
-
 
 .feedbackError {
     border: 1px solid red;
@@ -140,8 +143,8 @@ html {
     }
 
     #searchBox {
-        border: 1px solid blue;
-        background-color: aquamarine;
+        /* border: 1px solid blue; */
+        /* background-color: aquamarine; */
         width: 400px;
         display: flex;
         border-radius: 10px 10px 10px 10px;
@@ -169,17 +172,18 @@ html {
     }
 
     #searchBar {
-        border: 1px solid pink;
+        /* border: 1px solid pink; */
         margin-top: 10px;
         display: flex;
         border-radius: 50px 50px 50px 50px;
         padding: 5px;
         height: 47px;
+        background-color: #6ca2cc;
     }
 
     #searchBox {
-        border: 1px solid blue;
-        background-color: aquamarine;
+        /* border: 1px solid blue; */
+        /* background-color: aquamarine; */
         width: 400px;
         display: flex;
         border-radius: 10px 10px 10px 10px;

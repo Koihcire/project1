@@ -45,6 +45,7 @@ window.addEventListener("DOMContentLoaded", async function () {
         //turn on the noSearchResults div
         document.querySelector("#noSearchResults").style.display = "block";
         document.querySelector("#txtSearch").value = "";
+        map.setView([1.3521, 103.8198], 12)
     });
 
     //NAVIGATION EVENT LISTENER

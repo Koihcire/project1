@@ -12,8 +12,9 @@ html {
 
 .logoIcon {
     /* border: 1px solid red; */
-    height: 30px;
-    padding: 2px;
+    height: 40px;
+    /* padding: 2px; */
+    padding-bottom: 3px;
 }
 
 .filterIcon {
@@ -134,12 +135,13 @@ html {
     }
 
     #searchBar {
-        border: 1px solid pink;
+        /* border: 1px solid pink; */
         margin-top: 10px;
         display: flex;
         border-radius: 50px 50px 50px 50px;
         padding: 5px;
         height: 47px;
+        background-color: #6ca2cc;
     }
 
     #searchBox {
@@ -157,6 +159,18 @@ html {
         padding-top: 3px;
         height: 30px;
         width: 100px;
+    }
+
+    #searchContent {
+        max-height: 30vh;
+        overflow: scroll;
+        width: 100%;
+    }
+    
+    #navContent {
+        max-height: 35vh;
+        overflow: scroll;
+        width: 100%;
     }
 }
 
@@ -196,4 +210,17 @@ html {
         height: 30px;
         width: 123px;
     }
+
+    #searchContent {
+        max-height: 70vh;
+        overflow: scroll;
+        width: 100%;
+    }
+    
+    #navContent {
+        max-height: 57vh;
+        overflow: scroll;
+        width: 100%;
+    }
 }
+

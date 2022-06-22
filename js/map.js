@@ -41,14 +41,14 @@ var endIcon = L.icon({
 
 var mallIcon = L.icon({
     iconUrl: "images/mall.png",
-    iconSize: [40, 40],
+    iconSize: [30, 30],
 });
 
 var mallLogoUrl = "/images/shopping-description.png";
 
 var hotelIcon = L.icon({
     iconUrl: "images/hotel.png",
-    iconSize: [40, 40],
+    iconSize: [30, 30],
 });
 
 var hotelLogoUrl = "/images/hotel-description.png"
@@ -60,14 +60,14 @@ var userIcon = L.icon({
 
 var restaurantIcon = L.icon({
     iconUrl: "images/restaurant.png",
-    iconSize: [40,40],
+    iconSize: [30,30],
 });
 
 var restaurantLogoUrl = "/images/food-description.png";
 
 var attractionIcon = L.icon({
     iconUrl: "images/attraction.png",
-    iconSize: [40,40],
+    iconSize: [30,30],
 });
 
 var attractionLogoUrl = "/images/attraction-description.png";

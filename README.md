@@ -1,7 +1,8 @@
 <h1>Explore SG</h1>
 <hr>
-<!-- holding picture of different layouts -->
-The live demo of the website can be accessed <a href="https://stupendous-donut-1d1c52.netlify.app/">here</a>
+<img src="readme-inserts/device-mock-up.png" style="width:80%">
+
+The live demo of the website can be accessed <a href="https://exploresg.netlify.app/">here</a>
 
 
 <h2>1. Project Summary</h2>
@@ -64,12 +65,58 @@ The website should be designed with a mobile first template, and should be mobil
 <p>A sans serif font with a small font size was chosen to create the an uncluttered, minimalist look and feel to enhance the user experience on the website</p>
 
 <h4>2.5.3 Icons and Markers</h4>
-
+<img src="readme-inserts/icons.png" style="width:50%;">
 
 <h2>3. Features</h2>
 <hr>
-table of features
+
+<p>Based on the features defined above, the application should be able to:
+<ol>
+    <li>Allow the user to search for locations, organised according to different categories (shopping malls, restaurants, hotels, attractions)</li>
+    <li>Search can either be for the whole of Singapore, or limited to 3km radius around the user's current position</li>
+    <li>User should be able to filter the returned results according to which category is of interest to them</li>
+    <li>User should be able to access key information (photo, opening hours, address, website) about each location</li>
+    <li>User should be able to set a location as a start or end point, and generate a navigation route and instructions to reach there by public transport</li>
+</ol>
+
 <h3>3.2 Limitations and Future Implementations</h3>
+<table>
+    <tr>
+        <th>No.</th>
+        <th>Limitations</th>
+        <th>Future Implementations</th>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>User is currently restricted to searching for the following categories on Foursquare's API (19014 hotel, 17114 shopping mall, 16007 landmarks, 13034 cafe, 13035 coffeeshop, 13340 singapore restaurant, 13145 fastfood, 13099 chinese, 13299 malay, 13199 indian)</td>
+        <td>Future move to Google's API to return a wider array of results with higher consistency in data </td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>Current navigation route only returns result via "transit" mode of transport</td>
+        <td>User to be able to select between driving, transit, cycling and walking modes of transport</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>Current transit only returns 1 option for public transport. In reality there are multiple combinations of buses and trains available to the user.</td>
+        <td>Search to be able to return several transit options for user to decide, along with being able to see the arrival timings of buses and trains at any given bus stop.</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>Navigation route generated is currently focused on helping the user to get from start point to end point, rather than explore the island</td>
+        <td>Navigation results to be able to suggest points of interest along the way between the start point and end point to facilitate tourists to maximise their itinerary to see as much of Singapore as possible</td>
+    <tr>
+        <td>5</td>
+        <td>Search results return only basic location details</td>
+        <td>Search results to return more details such as reviews and ratings, busy hours, and photos submitted by other users</td>
+    </tr>
+    <tr>
+        <td>6</td>
+        <td>Search data is currently done via 2 api separate api calls directly from Foursquare. It is not possible to migitate any empty data fields, or allow user to save favourite locations separate from the search results</td>
+        <td>Extract and combine all required data into an array for better customisation. Push location objects that are tagged as user favourites into a separate array so that user can clear the map without losing these locations</td>
+    </tr>
+
+</table>
 
 
 <h2>4. Test Cases</h2>
@@ -79,33 +126,55 @@ The test list can be accessed <a href="https://1drv.ms/x/s!ArFMW1hSgH5_gacFMFkKc
 
 <h2>5. Deployment</h2>
 <hr>
-The deployment is done through netlify with the following <a href="">instructions</a>.
+The deployment is done through netlify with the following <a href="https://docs.google.com/document/d/1PSqdn83kqyb-gNUeU33ushxpeTWM8b032278DYn7IqE/edit?usp=sharing">instructions</a>.
 
 
 <h2>6. Technologies Used</h2>
 <hr>
-
+<table>
+    <tr>
+        <th>Technology</th>
+        <th>Usage</th>
+    </tr>
+    <tr>
+        <td>HTML,CSS,JS,Bootstrap5</td>
+        <td>Building and styling the main layout and user interactions on the website.</td>
+    </tr>
+    <tr>
+        <td>JS</td>
+        <td>Geolocation function to return user current latitude and longitude. Decoder for encoded polyline. Other custom functions.</td>
+    </tr>
+    <tr>
+        <td>Leaflet</td>
+        <td>Create map and markers. Support for markercluster and markercluster layering.</td>
+    </tr>
+    <tr>
+        <td>OpenStreetMap</td>
+        <td>Main map layer used</td>
+    </tr>
+    <tr>
+        <td>AXIOS</td>
+        <td>Call APIs</td>
+    </tr>
+    <tr>
+        <td>Foursquare Places API</td>
+        <td>Allow user to search for location and location details</td>
+    </tr>
+    <tr>
+        <td>Singapore Tourism Board Maps API</td>
+        <td>Navigation routing and turn by turn instructions</td>
+    </tr>
+</table>
 
 <h2>7. Credits</h2>
 <hr>
 
+<a href="https://developer.foursquare.com/docs/api-explorer">Foursquare Places API</a>: Location searches
 
-Scope
-This application aims to help visitors search for information and locations of national parks and nature trails in Singapore, and provide navigation instructions to reach those locations via a variety of travel modes (walking, cycling and public transit)
+<a href="https://tih-dev.stb.gov.sg/map-api/apis/get/v1.1/experiential_route/%7Bmode%7D">Singapore Tourism Board Map API</a>: Navigation route and instructions
 
-Features
-User should be able to search for specific locations of national parks and nature trails
-User should be able to toggle different layers to display either national parks, nature trails, or hotels
-User should be able to determine start point and end point, and navigate between them
-User should be able to select current location as start point
+<a href="https://www.flaticon.com/">Flaticon</a>: Icons and markers used throughout the website
 
+Github user <a href="https://github.com/ghybs/Leaflet.MarkerCluster.LayerSupport">ghybs</a>: Template for marker cluster layering support
 
-this is the icon pack for the description cards
-https://www.flaticon.com/packs/font-awesome/5
-
-this is the icon park for the logos links
-https://www.flaticon.com/packs/social-16
-
-<a href="https://www.flaticon.com/free-icons/restaurant" title="restaurant icons">Restaurant icons created by mavadee - Flaticon</a>
-
-<a href="https://www.flaticon.com/free-icons/maps-and-location" title="maps and location icons">Maps and location icons created by Flat Icons - Flaticon</a>
+Github user <a href="https://github.com/jieter/Leaflet.encoded">jieter</a>: JS for decoding encoding polyline

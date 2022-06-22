@@ -23,8 +23,8 @@
 
 <body>
 
-    <div id="map-container" style="position:relative; overflow: hidden;">
-        <!-- loading  -->
+    <main id="map-container" style="position:relative; overflow: hidden;">
+        <!-- LOADING PAGE  -->
         <div id="loading" style="height: 100vh; width:100%; background-color: rgba(0,0,0,0.5); display: none; position: absolute; z-index:314160;" >
             <div class="container">
                 <img src="images/loading.gif" style="position: absolute; align-self: center; justify-self: center;">
@@ -33,10 +33,10 @@
 
         <div id="search-container" class="container">
             <!-- SEARCH BAR -->
-            <div id="searchBar">
+            <header id="searchBar">
                 <!-- searchbox -->
                 <div id="searchBox">
-                    <img src="images/twitter.png" class="logoIcon"
+                    <img src="images/companylogo.png" class="logoIcon"
                         style="margin-right: 3px;">
                     <input type="text" id="txtSearch" placeholder="search Explore SG... "
                         class="form-control form-control-sm" style="border: white;">
@@ -47,7 +47,7 @@
                     <div class="dropdown container" style="display:inline; max-width: min-content;">
                         <button class="btn btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1"
                             data-bs-toggle="dropdown" aria-expanded="false" style="height: 31px; margin-left: 2px;">
-                            <img src="images/settings-sliders.png" class="filterIcon">
+                            <img src="images/filter.png" class="filterIcon">
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                             <li>
@@ -81,9 +81,9 @@
                 </div>
                 <!-- clear search -->
                 <button id="btnClearSearch" class="btn btn-sm">
-                    <img src="images/trash.png" style="height:25px; ">
+                    <img src="images/trash1.png" style="height:25px; ">
                 </button>
-            </div> 
+            </header> 
 
             <!-- check box for near me -->
             <div class="form-check form-switch mt-1 container ms-3">
@@ -124,8 +124,8 @@
                 <!-- CONTENT -->
                 <div class="tab-content" id="myTabContent">
                     <!-- search content -->
-                    <div class="tab-pane fade show active" id="searchContent" role="tabpanel"
-                        aria-labelledby="searchContent-tab" style="max-height: 70vh; overflow: scroll; width: 100%;">
+                    <section class="tab-pane fade show active" id="searchContent" role="tabpanel"
+                        aria-labelledby="searchContent-tab">
                         <div style="display:inline-flex">
                             <!-- no search results placeholder -->
                             <div id="noSearchResults">
@@ -134,9 +134,9 @@
                         </div>
                         <!-- search card content box -->
                         <div id="searchCardContent"></div>
-                    </div>
+                    </section>
                     <!-- navigation content -->
-                    <div class="tab-pane fade" id="navigate" role="tabpanel" aria-labelledby="navigate-tab">
+                    <section class="tab-pane fade" id="navigate" role="tabpanel" aria-labelledby="navigate-tab">
                         <div class="container">
                             <img src="images/circle.png" alt="">
                             <input type="text" id="startPoint" class="form-control form-control-sm mt-2 d-inline ms-3"
@@ -153,13 +153,12 @@
                             <button id="geolocate" class="btn btn-color btn-sm">Find Me</button>
                         </div>
                             <div class="tab-pane fade show active" id="navContent" role="tabpanel"
-                                aria-labelledby="navContent-tab"
-                                style="max-height: 57vh; overflow: scroll; width: 100%;">
+                                aria-labelledby="navContent-tab">
                             </div>
                         
-                    </div>
+                    </section>
                     <!-- feedback content -->
-                    <div class="tab-pane fade" id="feedback" role="tabpanel" aria-labelledby="feedback-tab">
+                    <section class="tab-pane fade" id="feedback" role="tabpanel" aria-labelledby="feedback-tab">
                         <p>Reach out to us to improve our services!</p>
                         <input type="text" class="form-control form-control-sm mt-3" id="feedbackName"
                             placeholder="Enter Your Name">
@@ -171,20 +170,20 @@
                             placeholder="Please provide your feedback"></textarea>
                         <p id="contentError"></p>
                         <button class="btn btn-sm btn-color mt-3" id="feedbackSubmit">Submit</button>
-                    </div>
+                    </section>
                 </div>
             </div>
-            <!-- MORE TOGGLE -->
+            <!-- more toggle -->
             <div id="moreToggle" class="container d-flex justify-content-center">
                 <a href="#searchOptions" data-bs-toggle="collapse" role="button" aria-expanded="false"
-                    aria-controls="searchOptions"><img src="images/more.png" style="height:20px;"></a>
+                    aria-controls="searchOptions"><img src="images/caret-down.png" style="height:20px;"></a>
             </div>
         </div>
         <div id="map"></div>
         
     </div>
 
-    <!-- modal -->
+    <!-- MODAL POP UP ON FORM SUBMISSION SUCCESS -->
     <div id="feedbackSuccessModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -196,7 +195,7 @@
                     <h6>Feedback: </h5>
                         <p id="confirmationContent"></p>
         </div>
-    </div>
+    </main>
 
     
 
@@ -205,6 +204,7 @@
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
         integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
         crossorigin=""></script>
+        <!-- polyline decoder js -->
     <script src="js/Polyline.encoded.js"></script>
     <!-- link markerscluster js -->
     <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster-src.js"></script>
@@ -228,8 +228,6 @@
         crossorigin="anonymous"></script>
     <!-- form validation js -->
     <script src="js/form-validation.js"></script>
-    <!-- search js -->
-    <!-- <script src="js/search.js"></script> -->
     <!-- utilities js -->
     <script src="js/utilities.js"></script>
     <!-- my js   -->
@@ -238,4 +236,3 @@
 
 </html>
 
-<img src="images/" alt="">

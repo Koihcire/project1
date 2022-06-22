@@ -133,10 +133,10 @@ async function search() {
                         <img src="${descriptionIconUrl}" style="height:30px; margin-top: 2px; margin-right:5px;">
                         </div>
                         <div style="height: 30px;">
-                        <p style="font-size: 15px; margin-top: 5px;">${locName}</p>
+                        <p style="font-size: 15px; margin-top: 2px;">${locName}</p>
                         </div>
                     </div>
-                    <div class="container mt-2 ">
+                    <div class="container mt-3 ">
                         <button class="btn btn-sm btn-color-marker" onclick="setStart(${lat}, ${lng}, '${locName}')">Set Start</button>
                         <button class="btn btn-sm btn-color-marker" onclick="setEnd(${lat}, ${lng}, '${locName}')">Set End</button>
                     </div>

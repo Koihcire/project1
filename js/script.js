@@ -70,12 +70,6 @@ window.addEventListener("DOMContentLoaded", async function () {
             let navigateRoute = await navigate(origin, destination);
             console.log(navigateRoute);
 
-            //create markers
-            // let originCoords = origin.split(",");
-            // let destinationCoords = destination.split(",");
-            // let startMarker = L.marker([originCoords[0], originCoords[1]], { icon: startIcon }).addTo(navigationLayer);
-            // let endMarker = L.marker([destinationCoords[0], destinationCoords[1]], { icon: endIcon }).addTo(navigationLayer);
-
             //create turn by turn cards on navigation content
             let leg1 = navigateRoute.data.routes[0].legs[0];
             let leg2 = navigateRoute.data.routes[0].legs[4];
@@ -100,6 +94,9 @@ window.addEventListener("DOMContentLoaded", async function () {
             let encoded = navigateRoute.data.routes[0].overview_polyline.points;
             let polyline = L.Polyline.fromEncoded(encoded).addTo(navigationLayer);
             navigationLayer.addTo(map);
+
+            let coords = origin.split(",")
+            map.flyTo([coords[0],coords[1]],15)
 
             //remove loading div
             document.querySelector("#loading").style.display = "none";

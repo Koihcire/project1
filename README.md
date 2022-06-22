@@ -8,28 +8,30 @@ The live demo of the website can be accessed <a href="https://exploresg.netlify.
 <h2>1. Project Summary</h2>
 <hr>
 
-<h3>1.1 Project Context</h3>
+<h3>Project Context</h3>
 <p>As the tourism industry is anticipating a influx of foreign visitors following the relaxation of covid measures. Foreign visitors are eager to explore both the iconic landmarks, shopping and food that Singapore has to offer. Many rely on word of mouth and social media to research for the most authentic spots to visit.</p>
 
-<h3>1.2 Organisation Goals</h3>
-<p>Explore SG is a map application that aims to help foreign visitors to search for the most popular shopping, food and landmarks to visit in Singapore, and provide navigation directions by public transport.
+<h3>Organisation Goals</h3>
+<p>Explore SG is a map application that aims to help foreign visitors to search for the most popular shopping, food and landmarks to visit in Singapore, and provide navigation directions by public transport.</p>
 
-<h3>1.3 Target Audience</h3>
+<h3>Target Audience</h3>
 <p>Foreign visitors who want to explore popular shopping, food and landmarks by public transport.
 
 <h2>2. UIUX</h2>
 <hr>
 
 <h3>2.1 Strategy</h3>
-<h4>2.1.1 Organisation Objective</h4>
-<p>
-<h4>2.1.2 User Stories</h4>
-User Story: 
-User is a tourist on a free and easy package, spending around 3 to 5 days in Singapore.
-Th
+
+<h4>Organisation Objective</h4>
+<p>As stated above</p>
+
+<h4>User Stories</h4>
+<p>User Story: 
+User is a tourist on a free and easy package, spending around 3 to 5 days in Singapore. Mode of travel will be public transport due to its low cost and efficiency, plus easy accessibility and well connectedness to main places of interest.</p>
 
 <h3>2.2 Scope</h3>
-<h4>2.2.1 Features</h4>
+
+<h4>Features</h4>
 <ol>
     <li>Allow the user to search for locations, organised according to different categories (shopping malls, restaurants, hotels, attractions)</li>
     <li>Search can either be for the whole of Singapore, or limited to 3km radius around the user's current position</li>
@@ -38,7 +40,7 @@ Th
     <li>User should be able to set a location as a start or end point, and generate a navigation route and instructions to reach there by public transport</li>
 </ol>
 
-<h4>2.2.2 Content</h4>
+<h4>Content</h4>
 Content for the website will be pulled from the following sources:
 <ul>
     <li>Foursquare (location details, photos, opening hours, address, website)</li>
@@ -46,8 +48,8 @@ Content for the website will be pulled from the following sources:
     <li>OpenStreetMap (map body)</li>
 </ul>
 
-<h4>2.2.3 Non-functional Requirements</h4>
-The website should be designed with a mobile first template, and should be mobile responsive to be used for phones, tablets and laptops.
+<h4>Non-functional Requirements</h4>
+<p>The website should be designed with a mobile first template, and should be mobile responsive to be used for phones, tablets and laptops.</p>
 
 <h3>2.3 Site Interaction Architecture</h3>
 <img src="readme-inserts/interaction-architecture.png" style="width:50%;">
@@ -57,15 +59,16 @@ The website should be designed with a mobile first template, and should be mobil
 <img src="readme-inserts/wireframe2.png" style="width:50%;">
 
 <h3>2.5 Surface</h3>
-<h4>2.5.1 Colors</h4>
+<h4>Colors</h4>
 <img src="readme-inserts/color-scheme.png" style="width:50%;">
 <p> The above color scheme was chosen as blue and orange tones convey vibrancy and warmth, resembling the sunshine and clear skies. This makes it suitable for a tourism related use case.
 
-<h4>2.5.2 Fonts</h4>
+<h4>Fonts</h4>
 <p>A sans serif font with a small font size was chosen to create the an uncluttered, minimalist look and feel to enhance the user experience on the website</p>
 
-<h4>2.5.3 Icons and Markers</h4>
+<h4>Icons and Markers</h4>
 <img src="readme-inserts/icons.png" style="width:50%;">
+</br>
 
 <h2>3. Features</h2>
 <hr>
@@ -79,7 +82,7 @@ The website should be designed with a mobile first template, and should be mobil
     <li>User should be able to set a location as a start or end point, and generate a navigation route and instructions to reach there by public transport</li>
 </ol>
 
-<h3>3.2 Limitations and Future Implementations</h3>
+<h3>Limitations and Future Implementations</h3>
 <table>
     <tr>
         <th>No.</th>

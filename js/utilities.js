@@ -185,6 +185,10 @@ async function search() {
                 if (!target.contains("show")) {
                     target.add("show");
                 }
+                //open the search pane
+                let searchTarget = document.querySelector("#searchContent-tab");
+                let tab = new bootstrap.Tab(searchTarget);
+                tab.show();
 
                 //scroll to card
                 let element = document.querySelector(`#${divLocationId}`);
